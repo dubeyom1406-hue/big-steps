@@ -1,0 +1,862 @@
+/* ── ADMISSION FORM STYLES ── */
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&display=swap');
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+.af-wrapper {
+  font-family: 'Outfit', sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.af-actions { display: none; } /* Kept empty or removed since we removed it from JSX */
+
+/* ── MODAL STYLES ── */
+.af-modal-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(15, 23, 42, 0.75);
+  backdrop-filter: blur(8px);
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.af-modal {
+  background: white;
+  border-radius: 24px;
+  padding: 40px;
+  width: 100%;
+  max-width: 500px;
+  text-align: center;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+  transform: scale(1);
+  animation: scaleUp 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes scaleUp {
+  from { transform: scale(0.9); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+.af-modal-icon {
+  font-size: 4rem;
+  margin-bottom: 20px;
+}
+
+.af-modal-title {
+  color: #1e3a8a;
+  font-size: 1.6rem;
+  font-weight: 800;
+  margin-bottom: 10px;
+}
+
+.af-modal-text {
+  color: #64748b;
+  font-size: 0.95rem;
+  margin-bottom: 30px;
+  line-height: 1.5;
+}
+
+.af-modal-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-bottom: 25px;
+}
+
+.af-modal-close {
+  background: transparent;
+  color: #64748b;
+  border: none;
+  font-weight: 700;
+  font-size: 0.95rem;
+  cursor: pointer;
+  text-decoration: underline;
+  transition: color 0.2s;
+}
+
+.af-modal-close:hover {
+  color: #1e293b;
+}
+
+.af-back-btn {
+  padding: 10px 20px;
+  background: transparent;
+  color: #1e3a8a;
+  border: 2px solid #e2e8f0;
+  border-radius: 12px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.3s ease;
+}
+
+.af-back-btn:hover {
+  background: #f8fafc;
+  border-color: #1e3a8a;
+  transform: translateX(-4px);
+}
+
+.af-download-group {
+  display: flex;
+  gap: 15px;
+}
+
+.af-print-btn {
+  padding: 12px 24px;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+  transition: all 0.3s ease;
+}
+
+.af-print-btn.blue { background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 100%); }
+.af-print-btn.red { background: linear-gradient(135deg, #dc2626 0%, #ef4444 100%); }
+
+.af-print-btn:hover { 
+  transform: translateY(-2px);
+  box-shadow: 0 12px 20px rgba(0,0,0,0.15);
+  filter: brightness(1.1);
+}
+
+/* ── INPUT STYLES ── */
+.af-input {
+  flex: 1;
+  border: none;
+  border-bottom: 2px solid #e2e8f0;
+  background: transparent;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.9rem;
+  color: #111827;
+  padding: 6px 4px;
+  outline: none;
+  min-width: 0;
+  transition: all 0.3s ease;
+}
+.af-input:focus { 
+  border-bottom-color: #1e3a8a;
+  background: rgba(30, 58, 138, 0.03);
+}
+.af-input.short { max-width: 110px; flex: none; }
+
+.af-input-inline {
+  border: none;
+  border-bottom: 1.5px solid #1e3a8a;
+  background: transparent;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #1e3a8a;
+  padding: 2px 4px;
+  outline: none;
+  width: 90px;
+}
+
+select.af-input {
+  cursor: pointer;
+}
+
+.af-radio-label {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  font-size: 0.72rem;
+  color: #374151;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.af-check-label {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  font-size: 0.72rem;
+  color: #374151;
+  cursor: pointer;
+  white-space: nowrap;
+  margin-right: 4px;
+}
+
+.af-save-btn {
+  padding: 18px 50px;
+  background: linear-gradient(135deg, #059669 0%, #10b981 100%);
+  color: white;
+  border: none;
+  border-radius: 16px;
+  font-size: 1.1rem;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: 0 10px 25px rgba(16, 185, 129, 0.3);
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.af-save-btn:hover {
+  transform: translateY(-5px) scale(1.02);
+  box-shadow: 0 15px 35px rgba(16, 185, 129, 0.4);
+  filter: brightness(1.1);
+}
+
+.af-save-btn.blue {
+  background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 100%);
+  box-shadow: 0 10px 25px rgba(37, 99, 235, 0.3);
+}
+.af-save-btn.blue:hover {
+  box-shadow: 0 15px 35px rgba(37, 99, 235, 0.4);
+}
+
+.af-save-btn.red {
+  background: linear-gradient(135deg, #dc2626 0%, #ef4444 100%);
+  box-shadow: 0 10px 25px rgba(239, 68, 68, 0.3);
+}
+.af-save-btn.red:hover {
+  box-shadow: 0 15px 35px rgba(239, 68, 68, 0.4);
+}
+
+.af-submit-container {
+  display: flex;
+  justify-content: center;
+  padding: 40px 0 20px 0;
+  border-top: 1px dashed #e2e8f0;
+  margin-top: 20px;
+}
+
+/* ── HEADER ── */
+.af-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: linear-gradient(135deg, #1e3a8a 0%, #172554 100%);
+  padding: 30px 60px;
+}
+
+.af-logo-block {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.af-logo-block.small { gap: 8px; }
+
+.af-logo { height: 60px; width: auto; filter: drop-shadow(0 2px 6px rgba(0,0,0,0.3)); }
+.af-logo.small { height: 45px; }
+
+.af-brand h1 {
+  font-size: 1.3rem;
+  font-weight: 900;
+  color: #FFD700;
+  line-height: 1;
+  text-shadow: 0 1px 4px rgba(0,0,0,0.4);
+  letter-spacing: 0.5px;
+}
+.af-brand.small h2 {
+  font-size: 1rem;
+  font-weight: 900;
+  color: #FFD700;
+}
+
+.af-tagline-bar {
+  background: #FFD700;
+  color: #1e3a8a;
+  font-size: 0.65rem;
+  font-weight: 800;
+  text-align: center;
+  padding: 1px 10px;
+  border-radius: 3px;
+  margin: 3px 0;
+  letter-spacing: 1px;
+}
+.af-tagline-bar.small { font-size: 0.6rem; padding: 1px 8px; }
+
+.af-tagline-text {
+  font-size: 0.62rem;
+  color: rgba(255,255,255,0.85);
+}
+
+.af-header-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 6px;
+}
+
+.af-phone {
+  background: #FFD700;
+  color: #1e3a8a;
+  font-weight: 800;
+  font-size: 0.85rem;
+  padding: 4px 12px;
+  border-radius: 20px;
+}
+.af-phone.small { font-size: 0.72rem; padding: 3px 10px; }
+
+.af-icons-row {
+  display: flex;
+  gap: 8px;
+  font-size: 1.3rem;
+}
+
+/* ── FORM TITLE ── */
+.af-form-title {
+  background: #1e3a8a;
+  color: #64748b;
+  position: relative;
+  font-size: 0.9rem;
+  font-weight: 800;
+  padding: 12px 20px;
+  letter-spacing: 1.5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+
+.af-title-deco {
+  display: flex;
+  gap: 5px;
+  font-size: 1rem;
+  opacity: 0.8;
+}
+
+.af-form-title h2 {
+  font-size: 1.4rem;
+  font-weight: 900;
+  margin: 0;
+}
+
+.af-form-meta {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  padding: 15px 40px;
+  background: #f8fafc;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.af-meta-field {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.af-meta-field label {
+  font-weight: 700;
+  color: #1e3a8a;
+  font-size: 0.9rem;
+}
+
+.af-meta-field .af-input {
+  width: 180px;
+}
+
+/* ── SECTION BOX ── */
+.af-section-box {
+  border: 1.5px solid #1e3a8a;
+  border-radius: 6px;
+  overflow: hidden;
+  margin: 8px;
+}
+
+.af-section-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 12px;
+  font-weight: 800;
+  font-size: 0.78rem;
+  letter-spacing: 0.5px;
+}
+.af-section-header.blue { background: #1e3a8a; color: #FFD700; }
+.af-section-header.yellow { background: #FFD700; color: #1e3a8a; }
+
+.af-sec-icon { font-size: 1rem; }
+
+/* ── STUDENT BODY ── */
+.af-student-body {
+  display: flex;
+  gap: 10px;
+  padding: 8px 12px;
+}
+
+.af-fields-col {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  padding: 25px 35px;
+}
+
+.af-photo-box {
+  width: 85px;
+  min-width: 85px;
+  height: 105px;
+  border: 1.5px dashed #1e3a8a;
+  border-radius: 6px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: #6b7280;
+  font-size: 0.65rem;
+  margin: 8px 12px 8px 0;
+  cursor: pointer;
+  transition: all 0.2s;
+  position: relative;
+  overflow: hidden;
+}
+.af-photo-box:hover {
+  background: rgba(30, 58, 138, 0.05);
+  border-color: #2563eb;
+}
+.af-photo-preview {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.af-photo-box span { font-size: 1.5rem; margin-bottom: 4px; }
+
+/* ── SIGNATURE PREVIEW ── */
+.af-auth-box {
+  cursor: pointer;
+}
+.af-auth-line {
+  position: relative;
+  overflow: hidden;
+}
+.af-sign-preview {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* ── FIELD ROWS ── */
+.af-field-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: nowrap;
+}
+.af-field-row.wrap { flex-wrap: wrap; }
+.af-field-row.full { flex: 1 1 100%; }
+.af-field-row.mt { margin-top: 4px; }
+
+.af-field-row label {
+  font-weight: 600;
+  color: #1e293b;
+  white-space: nowrap;
+  font-size: 0.85rem;
+  min-width: 130px;
+}
+
+.af-line-input {
+  flex: 1;
+  border-bottom: 1.5px solid #374151;
+  min-height: 16px;
+}
+.af-line-input.short { max-width: 80px; flex: none; }
+.af-line-input.long { flex: 1; }
+
+.af-dob {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  font-weight: 600;
+}
+.af-dd { border-bottom: 1.5px solid #374151; min-width: 25px; text-align: center; }
+
+.af-checkbox {
+  white-space: nowrap;
+  font-size: 0.72rem;
+  color: #374151;
+  margin-right: 4px;
+}
+
+.af-checkbox-group {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 2px;
+}
+
+.af-rupee { font-weight: 700; color: #1e3a8a; font-size: 0.85rem; }
+
+/* ── TWO COL ── */
+.af-two-col {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 10px;
+  padding: 0 10px;
+}
+
+/* ── TOTAL ROW ── */
+.af-total-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #FFD700;
+  padding: 5px 10px;
+  border-radius: 4px;
+  font-weight: 800;
+  font-size: 0.78rem;
+  margin: 4px 0;
+}
+.af-rupee-total { font-weight: 700; font-size: 0.78rem; }
+
+/* ── NOTES ── */
+.af-notes-body {
+  padding: 10px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.af-note-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #1e293b;
+}
+.af-note-icon { font-size: 1.3rem; }
+
+/* ── SIGNATURES ── */
+.af-sign-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 16px;
+  gap: 8px;
+  border-top: 1px dashed #cbd5e1;
+}
+.af-sign-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.7rem;
+  color: #374151;
+  flex: 1;
+}
+.af-sign-line {
+  width: 100%;
+  height: 1px;
+  border-bottom: 1.5px dashed #374151;
+  margin-bottom: 4px;
+}
+.af-sign-sep {
+  color: #9ca3af;
+  font-size: 0.65rem;
+  white-space: nowrap;
+}
+
+/* ── TEAR HERE ── */
+.af-tear {
+  text-align: center;
+  background: #f1f5f9;
+  padding: 5px;
+  font-size: 0.72rem;
+  color: #6b7280;
+  border-top: 1px dashed #94a3b8;
+  border-bottom: 1px dashed #94a3b8;
+  letter-spacing: 1px;
+}
+
+/* ── RECEIPT ── */
+.af-receipt {
+  background: #fffbeb;
+  border-top: 2px dashed #1e3a8a;
+}
+
+.af-receipt-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: linear-gradient(135deg, #1e3a8a 0%, #1d4ed8 100%);
+  padding: 10px 16px;
+}
+
+.af-receipt-meta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 6px;
+}
+
+.af-free-demo {
+  background: #ef4444;
+  color: white;
+  font-size: 0.6rem;
+  font-weight: 900;
+  text-align: center;
+  padding: 4px 8px;
+  border-radius: 4px;
+  line-height: 1.2;
+  border: 1.5px solid #FFD700;
+}
+
+.af-receipt-title {
+  background: #1e3a8a;
+  color: #FFD700;
+  text-align: center;
+  font-size: 1rem;
+  font-weight: 900;
+  padding: 6px;
+  letter-spacing: 2px;
+}
+
+.af-receipt-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 10px 16px;
+}
+
+/* ── WHAT MAKES US DIFFERENT ── */
+.af-diff-auth {
+  display: flex;
+  gap: 10px;
+  padding: 8px 16px;
+  border-top: 1px solid #e2e8f0;
+  align-items: center;
+}
+
+.af-diff-section { flex: 1; }
+
+.af-diff-title {
+  background: #1e3a8a;
+  color: #FFD700;
+  font-size: 0.65rem;
+  font-weight: 800;
+  text-align: center;
+  padding: 3px 10px;
+  border-radius: 4px;
+  letter-spacing: 1px;
+  margin-bottom: 8px;
+}
+
+.af-diff-icons {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.af-diff-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  font-size: 0.6rem;
+  text-align: center;
+  color: #374151;
+  max-width: 55px;
+}
+.af-diff-item span { font-size: 1.4rem; }
+
+.af-auth-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 130px;
+  gap: 4px;
+  font-size: 0.7rem;
+  color: #374151;
+}
+.af-auth-line {
+  width: 100%;
+  height: 50px;
+  border: 1px solid #cbd5e1;
+  border-radius: 4px;
+}
+
+/* ── ADDRESS FOOTER ── */
+.af-address {
+  background: #1e3a8a;
+  color: #ffffff;
+  text-align: center;
+  padding: 6px;
+  font-size: 0.72rem;
+  font-weight: 600;
+}
+
+.af-thanks {
+  color: #FFD700;
+  font-size: 0.85rem;
+}
+
+/* ── SELECTIVE PRINTING ── */
+@media print {
+  .no-print { display: none !important; }
+  
+  /* When printing form: hide receipt and tear line */
+  .printing-form .af-tear,
+  .printing-form .af-receipt { display: none !important; }
+  
+  /* When printing receipt: hide form sections and tear line */
+  .printing-receipt .af-header,
+  .printing-receipt .af-form-title,
+  .printing-receipt .af-form-meta,
+  .printing-receipt .af-section-box,
+  .printing-receipt .af-two-col,
+  .printing-receipt .af-sign-row,
+  .printing-receipt .af-tear { display: none !important; }
+
+  .af-wrapper { padding: 0; background: white; display: block; }
+  .af-page { 
+    max-width: 800px; 
+    margin: 0 auto;
+    border: 3px solid #1e3a8a; 
+    border-radius: 8px;
+    box-shadow: none;
+    font-size: 0.78rem;
+  }
+  .af-header { padding: 12px 18px; }
+  .af-classes-badge { right: 14px; padding: 3px 10px; font-size: 0.65rem; }
+  .af-section-box { margin: 8px; }
+  .af-input { font-size: 0.78rem; }
+  body { print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+}
+
+/* ── MOBILE RESPONSIVENESS ── */
+@media (max-width: 860px) {
+  .af-page {
+    padding: 10px;
+    margin: 0;
+    width: 100%;
+    overflow-x: hidden;
+  }
+  
+  .af-header {
+    flex-direction: column;
+    text-align: center;
+    gap: 15px;
+    padding: 20px 15px;
+  }
+  
+  .af-header-right {
+    align-items: center;
+  }
+  
+  .af-logo-block {
+    flex-direction: column;
+  }
+
+  .af-form-title {
+    flex-direction: column;
+    gap: 10px;
+    padding: 15px 10px;
+    text-align: center;
+  }
+
+  .af-form-title h2 {
+    font-size: 1.1rem;
+  }
+
+  .af-title-deco {
+    display: none;
+  }
+  
+  .af-classes-badge {
+    position: static;
+    margin-top: 5px;
+  }
+
+  .af-form-meta {
+    flex-direction: column;
+    gap: 15px;
+    padding: 15px;
+    align-items: stretch;
+  }
+
+  .af-meta-field {
+    justify-content: space-between;
+  }
+
+  .af-meta-field .af-input {
+    width: auto;
+    flex: 1;
+    margin-left: 10px;
+  }
+  
+  .af-two-col {
+    grid-template-columns: 1fr;
+  }
+  
+  .af-student-body {
+    flex-direction: column;
+  }
+  
+  .af-photo-box {
+    margin: 0 auto;
+  }
+  
+  .af-field-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  
+  .af-field-row .af-input, 
+  .af-field-row .af-input.short,
+  .af-line-input {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .af-field-row label {
+    min-width: auto;
+  }
+  
+  .af-sign-row {
+    flex-direction: column;
+    gap: 30px;
+    align-items: center;
+  }
+  
+  .af-diff-auth {
+    flex-direction: column;
+    gap: 30px;
+  }
+  
+  .af-auth-box {
+    align-self: center;
+  }
+  
+  .af-actions {
+    flex-direction: column;
+  }
+  
+  .af-download-group {
+    width: 100%;
+    flex-direction: column;
+  }
+  
+  .af-print-btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+

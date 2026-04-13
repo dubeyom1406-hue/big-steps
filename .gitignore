@@ -1,0 +1,15 @@
+# Dependency directories
+node_modules/
+dist/
+.DS_Store
+
+# Security Keys (NEVER UPLOAD TO GITHUB)
+serviceAccountKey.json
+backend/serviceAccountKey.json
+.env
+.env.local
+
+# Build files
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*

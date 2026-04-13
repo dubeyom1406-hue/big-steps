@@ -1,0 +1,203 @@
+/* ── ADMIN LOGIN STYLES ── */
+
+@keyframes al-orb-pulse {
+  0%, 100% { transform: scale(1); opacity: 0.4; }
+  50% { transform: scale(1.1); opacity: 0.7; }
+}
+
+.al-page {
+  min-height: 100vh;
+  display: flex;
+  font-family: 'Outfit', sans-serif;
+}
+
+.al-left {
+  width: 47%;
+  background: 
+    radial-gradient(circle at 0% 0%, rgba(255, 255, 255, 0.05) 0%, transparent 50%),
+    linear-gradient(135deg, #0d0d1a 0%, #001a38 35%, #002d70 70%, #003a7a 100%);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 60px 55px;
+}
+
+.al-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(60px);
+  animation: al-orb-pulse 6s ease-in-out infinite;
+  pointer-events: none;
+}
+.al-orb-1 {
+  width: 400px; height: 400px;
+  background: radial-gradient(circle, rgba(0, 120, 255, 0.25) 0%, transparent 70%);
+  top: -80px; right: -80px;
+}
+.al-orb-2 {
+  width: 250px; height: 250px;
+  background: radial-gradient(circle, rgba(0, 200, 255, 0.15) 0%, transparent 70%);
+  bottom: 40px; left: -60px;
+  animation-delay: 2s;
+}
+
+.al-particles { position: absolute; inset: 0; pointer-events: none; }
+.al-particle {
+  position: absolute;
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.3);
+  animation: particle-drift 10s ease-in-out infinite;
+}
+
+.al-left-inner {
+  position: relative;
+  z-index: 2;
+  color: white;
+}
+
+.al-icon-wrap {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 72px; height: 72px;
+  margin-bottom: 36px;
+}
+
+.al-icon-ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 215, 0, 0.3);
+  border-top-color: #ffd700;
+  animation: ring-spin 4s linear infinite;
+}
+
+.al-shield-icon {
+  font-size: 2.2rem;
+  filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.4));
+}
+
+.al-headline {
+  font-size: 3.2rem;
+  font-weight: 800;
+  line-height: 1.1;
+  color: white;
+  margin-bottom: 20px;
+  letter-spacing: -0.04em;
+}
+
+.al-hello {
+  font-weight: 400; font-size: 2rem;
+  color: rgba(255, 255, 255, 0.6);
+  display: block;
+}
+
+.al-brand-name {
+  background: linear-gradient(90deg, #ffffff 0%, #FFD700 60%, #ffb300 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.al-sub {
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.65);
+  line-height: 1.7;
+  max-width: 320px;
+  margin-bottom: 36px;
+}
+
+.al-badges { display: flex; flex-wrap: wrap; gap: 10px; }
+.al-badge {
+  padding: 6px 14px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 30px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: white;
+  backdrop-filter: blur(8px);
+}
+
+.al-right {
+  flex: 1;
+  background: #fdfdfd;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 50px;
+}
+
+.al-form-wrap {
+  width: 100%;
+  max-width: 400px;
+}
+
+.al-logo { height: 70px; width: auto; margin-bottom: 20px; margin-top: -10px; display: block; }
+
+.al-title {
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: #0f172a;
+  margin-bottom: 8px;
+}
+
+.al-hint {
+  font-size: 0.88rem;
+  color: #64748b;
+  margin-bottom: 36px;
+}
+.al-hint a { color: #0f172a; font-weight: 700; text-decoration: underline; }
+
+.al-form { display: flex; flex-direction: column; gap: 16px; }
+
+.al-input-group { position: relative; display: flex; align-items: center; }
+
+.al-in-icon {
+  position: absolute; left: 16px;
+  color: #94a3b8;
+  display: flex; align-items: center;
+  z-index: 1;
+}
+
+.al-input {
+  width: 100%;
+  padding: 14px 16px 14px 44px;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 12px;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.95rem;
+  background: #fff;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.al-input:focus { border-color: #0f172a; box-shadow: 0 0 0 3px rgba(15, 23, 42, 0.1); }
+
+.al-btn-primary {
+  width: 100%;
+  padding: 16px;
+  background: #0f172a;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-family: 'Outfit', sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.2s, background 0.2s;
+  display: flex; align-items: center; justify-content: center; gap: 10px;
+}
+.al-btn-primary:hover { background: #1e293b; transform: translateY(-2px); }
+
+@media (max-width: 860px) {
+  .al-page { flex-direction: column; }
+  .al-left { width: 100%; padding: 40px 20px; min-height: auto; align-items: center; text-align: center; }
+  .al-headline { font-size: 2rem; }
+  .al-right { padding: 40px 20px; }
+}
