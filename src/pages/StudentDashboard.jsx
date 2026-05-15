@@ -27,7 +27,7 @@ const StudentDashboard = () => {
         // Fetch fresh profile data to reflect any updates made by Admin (e.g. Class update)
         const fetchFreshProfile = async () => {
             try {
-                const res = await fetch(`https://srv-d7e8e6navr4c73ehnmqg.onrender.com/api/students/${student.id}`);
+                const res = await fetch(`https://big-steps.onrender.com/api/students/${student.id}`);
                 if (res.ok) {
                     const freshStudent = await res.json();
                     setStudentData(freshStudent);
@@ -50,7 +50,7 @@ const StudentDashboard = () => {
         if (!classGrade) return;
         try {
             // Student doesn't need auth token for materials GET API based on our backend code, but we can pass token if needed.
-            const res = await fetch(`https://srv-d7e8e6navr4c73ehnmqg.onrender.com/api/materials?classGrade=${classGrade}`);
+            const res = await fetch(`https://big-steps.onrender.com/api/materials?classGrade=${classGrade}`);
             if (res.ok) {
                 setMaterials(await res.json());
             }
@@ -278,7 +278,7 @@ const StudentDashboard = () => {
                                                     </div>
                                                 </div>
                                                 <a
-                                                    href={`https://srv-d7e8e6navr4c73ehnmqg.onrender.com${mat.fileUrl}`}
+                                                    href={`https://big-steps.onrender.com${mat.fileUrl}`}
                                                     target="_blank"
                                                     rel="noreferrer"
                                                     className="sd-note-btn"

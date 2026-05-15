@@ -1,7 +1,7 @@
 // Central API Configuration
 // Development: 'http://localhost:5000/api'
-// Production:  'https://srv-d7e8e6navr4c73ehnmqg.onrender.com/api'
-const BASE_URL = import.meta.env.VITE_API_URL || 'https://srv-d7e8e6navr4c73ehnmqg.onrender.com/api';
+// Production:  'https://big-steps.onrender.com/api'
+const BASE_URL = import.meta.env.VITE_API_URL || 'https://big-steps.onrender.com/api';
 
 export const apiFetch = async (endpoint, options = {}) => {
     const token = localStorage.getItem('admin_token');

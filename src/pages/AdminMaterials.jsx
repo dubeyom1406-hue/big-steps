@@ -27,8 +27,8 @@ const AdminMaterials = () => {
             const headers = { 'Authorization': `Bearer ${token}` };
 
             const [matRes, subRes] = await Promise.all([
-                fetch('https://srv-d7e8e6navr4c73ehnmqg.onrender.com/api/materials', { headers }),
-                fetch('https://srv-d7e8e6navr4c73ehnmqg.onrender.com/api/subjects', { headers })
+                fetch('https://big-steps.onrender.com/api/materials', { headers }),
+                fetch('https://big-steps.onrender.com/api/subjects', { headers })
             ]);
 
             if (matRes.ok) setMaterials(await matRes.json());
@@ -67,7 +67,7 @@ const AdminMaterials = () => {
 
         try {
             const token = localStorage.getItem('user_token');
-            const res = await fetch('https://srv-d7e8e6navr4c73ehnmqg.onrender.com/api/materials', {
+            const res = await fetch('https://big-steps.onrender.com/api/materials', {
                 method: 'POST',
                 headers: { 'Authorization': `Bearer ${token}` },
                 body: formData
@@ -96,7 +96,7 @@ const AdminMaterials = () => {
         if (!window.confirm("Are you sure you want to delete this material?")) return;
         try {
             const token = localStorage.getItem('user_token');
-            const res = await fetch(`https://srv-d7e8e6navr4c73ehnmqg.onrender.com/api/materials/${id}`, {
+            const res = await fetch(`https://big-steps.onrender.com/api/materials/${id}`, {
                 method: 'DELETE',
                 headers: { 'Authorization': `Bearer ${token}` }
             });
@@ -194,7 +194,7 @@ const AdminMaterials = () => {
                                         </div>
                                     </div>
                                     <div className="am-mat-actions">
-                                        <a href={`https://srv-d7e8e6navr4c73ehnmqg.onrender.com${m.fileUrl}`} target="_blank" rel="noreferrer" className="am-btn-view">View</a>
+                                        <a href={`https://big-steps.onrender.com${m.fileUrl}`} target="_blank" rel="noreferrer" className="am-btn-view">View</a>
                                         <button onClick={() => handleDelete(m.id)} className="am-btn-delete">Delete</button>
                                     </div>
                                 </div>

@@ -19,7 +19,7 @@ const FeeAnalytics = () => {
     const fetchStudents = async () => {
         try {
             const token = localStorage.getItem('user_token');
-            const res = await fetch('https://srv-d7e8e6navr4c73ehnmqg.onrender.com/api/students', {
+            const res = await fetch('https://big-steps.onrender.com/api/students', {
                 headers: { 'Authorization': `Bearer ${token}` }
             });
             const data = await res.json();
@@ -52,7 +52,7 @@ const FeeAnalytics = () => {
 
         try {
             const token = localStorage.getItem('user_token');
-            await fetch(`https://srv-d7e8e6navr4c73ehnmqg.onrender.com/api/students/${student.id}`, {
+            await fetch(`https://big-steps.onrender.com/api/students/${student.id}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
