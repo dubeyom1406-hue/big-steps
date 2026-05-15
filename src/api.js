@@ -1,5 +1,7 @@
 // Central API Configuration
-const BASE_URL = 'http://127.0.0.1:5000/api';
+// Development: 'http://localhost:5000/api'
+// Production:  'https://srv-d7e8e6navr4c73ehnmqg.onrender.com/api'
+const BASE_URL = import.meta.env.VITE_API_URL || 'https://srv-d7e8e6navr4c73ehnmqg.onrender.com/api';
 
 export const apiFetch = async (endpoint, options = {}) => {
     const token = localStorage.getItem('admin_token');
@@ -27,7 +29,7 @@ export const apiFetch = async (endpoint, options = {}) => {
         return response;
     } catch (error) {
         console.error("API Connectivity Error:", error);
-        throw new Error("Unable to connect to backend. Please check if server is running on port 5000.");
+        throw new Error("Unable to connect to backend server. It might be starting up or sleeping, please wait a minute and try again.");
     }
 };
 

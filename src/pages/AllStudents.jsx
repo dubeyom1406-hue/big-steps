@@ -9,20 +9,11 @@ const AllStudents = () => {
     const [loading, setLoading] = useState(true)
     const [search, setSearch] = useState('')
     const [classFilter, setClassFilter] = useState('All')
-    const [activeDropdown, setActiveDropdown] = useState(null)
-    const dropdownRef = useRef(null)
+    const [viewModalData, setViewModalData] = useState(null)
+    const [selectedMonth, setSelectedMonth] = useState(0)
     const navigate = useNavigate()
 
-    // Close dropdown when clicking outside
-    useEffect(() => {
-        const handleClickOutside = (event) => {
-            if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-                setActiveDropdown(null);
-            }
-        };
-        document.addEventListener('mousedown', handleClickOutside);
-        return () => document.removeEventListener('mousedown', handleClickOutside);
-    }, []);
+    const months = ["Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec", "Jan", "Feb", "Mar"];
 
     const fetchStudents = async () => {
         setLoading(true);
@@ -150,42 +141,12 @@ const AllStudents = () => {
                                     <td>{s.registrationDate}</td>
                                     <td className="text-right">
                                         <div className="as-action-btns">
-                                            <div className="as-slide-container">
-                                                {activeDropdown !== s.id ? (
-                                                    <button 
-                                                        className="as-btn view"
-                                                        onClick={(e) => {
-                                                            e.stopPropagation();
-                                                            setActiveDropdown(s.id);
-                                                        }}
-                                                    >
-                                                        View
-                                                    </button>
-                                                ) : (
-                                                    <div className="as-quick-actions" ref={dropdownRef}>
-                                                        <button 
-                                                            className="as-btn-icon form"
-                                                            title="Admission Form"
-                                                            onClick={() => navigate('/admission', { state: { studentData: s, mode: 'form' } })}
-                                                        >
-                                                            📄
-                                                        </button>
-                                                        <button 
-                                                            className="as-btn-icon receipt"
-                                                            title="Receipt"
-                                                            onClick={() => navigate('/admission', { state: { studentData: s, mode: 'receipt' } })}
-                                                        >
-                                                            🧾
-                                                        </button>
-                                                        <button 
-                                                            className="as-btn-close"
-                                                            onClick={() => setActiveDropdown(null)}
-                                                        >
-                                                            ✕
-                                                        </button>
-                                                    </div>
-                                                )}
-                                            </div>
+                                            <button 
+                                                className="as-btn view"
+                                                onClick={() => { setViewModalData(s); setSelectedMonth(0); }}
+                                            >
+                                                View
+                                            </button>
                                             <button className="as-btn delete" onClick={() => handleDelete(s.id)}>Delete</button>
                                         </div>
                                     </td>
@@ -204,6 +165,75 @@ const AllStudents = () => {
                     </tbody>
                 </table>
             </div>
+
+            {/* ── VIEW MODAL ── */}
+            {viewModalData && (
+                <div className="as-modal-overlay" onClick={() => setViewModalData(null)}>
+                    <div className="as-modal" onClick={e => e.stopPropagation()}>
+                        <div className="as-modal-header">
+                            <h2>{viewModalData.studentName}</h2>
+                            <button className="as-modal-close" onClick={() => setViewModalData(null)}>✕</button>
+                        </div>
+                        
+                        <div className="as-modal-body">
+                            <div className="as-modal-section">
+                                <h3>Admission Form</h3>
+                                <button 
+                                    className="as-modal-btn blue" 
+                                    onClick={() => navigate('/admission', { state: { studentData: viewModalData, mode: 'form' } })}
+                                >
+                                    📄 View / Print Form
+                                </button>
+                            </div>
+
+                            <div className="as-modal-divider"></div>
+
+                            <div className="as-modal-section">
+                                <h3>Fee Receipt</h3>
+                                <div className="as-month-selector">
+                                    <label>Select Month:</label>
+                                    <select 
+                                        value={selectedMonth} 
+                                        onChange={e => setSelectedMonth(Number(e.target.value))}
+                                    >
+                                        {months.map((m, idx) => (
+                                            <option key={idx} value={idx}>{m}</option>
+                                        ))}
+                                    </select>
+                                </div>
+
+                                <div className="as-receipt-result">
+                                    {viewModalData.paidMonths && viewModalData.paidMonths.includes(selectedMonth) ? (
+                                        <div className="as-receipt-success">
+                                            <p>✅ Fee Paid for {months[selectedMonth]}</p>
+                                            <button 
+                                                className="as-modal-btn green"
+                                                onClick={() => {
+                                                    const receiptData = {
+                                                        ...viewModalData,
+                                                        receiptFor: { admissionFee: false, monthlyFee: true, other: false },
+                                                        amountPaid: viewModalData.monthlyFee,
+                                                        receiptDate: new Date().toISOString().split('T')[0],
+                                                        receiptOther: months[selectedMonth] + ' Fee'
+                                                    };
+                                                    navigate('/admission', { state: { studentData: receiptData, mode: 'receipt' } });
+                                                }}
+                                            >
+                                                🧾 Download / Print Receipt
+                                            </button>
+                                        </div>
+                                    ) : (
+                                        <div className="as-receipt-notfound">
+                                            <span className="sad-emoji">😔</span>
+                                            <p>Fee Not Paid for {months[selectedMonth]}</p>
+                                        </div>
+                                    )}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     )
 }

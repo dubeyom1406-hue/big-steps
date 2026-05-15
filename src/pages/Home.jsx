@@ -1,9 +1,11 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import logoImg from '../assets/logo.png'
 import heroImg from '../assets/hero.png'
 
 const Home = () => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
   return (
     <div className="landing-page">
       {/* Navbar */}
@@ -13,12 +15,46 @@ const Home = () => {
             <img src={logoImg} alt="Bright Steps Coaching Logo" className="logo-main" />
           </div>
           
-          <div className="nav-actions">
-            <Link to="/login" className="btn-login">
-              LOGIN
+          {/* Desktop Nav */}
+          <div className="nav-actions desktop-nav" style={{ display: 'flex', gap: '15px' }}>
+            <Link to="/login" className="btn-login" style={{ background: 'linear-gradient(135deg, #3b24e0, #5b45ff)', color: 'white', border: 'none' }}>
+              STUDENT LOGIN
+            </Link>
+            <Link to="/admin-login" className="btn-login">
+              ADMIN LOGIN
             </Link>
           </div>
+
+          {/* Hamburger Icon */}
+          <div className="hamburger" onClick={() => setIsMenuOpen(!isMenuOpen)}>
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              {isMenuOpen ? (
+                <>
+                  <line x1="18" y1="6" x2="6" y2="18"></line>
+                  <line x1="6" y1="6" x2="18" y2="18"></line>
+                </>
+              ) : (
+                <>
+                  <line x1="3" y1="12" x2="21" y2="12"></line>
+                  <line x1="3" y1="6" x2="21" y2="6"></line>
+                  <line x1="3" y1="18" x2="21" y2="18"></line>
+                </>
+              )}
+            </svg>
+          </div>
         </div>
+
+        {/* Mobile Menu */}
+        {isMenuOpen && (
+          <div className="mobile-menu">
+            <Link to="/login" className="btn-login" style={{ background: 'linear-gradient(135deg, #3b24e0, #5b45ff)', color: 'white', border: 'none' }}>
+              STUDENT LOGIN
+            </Link>
+            <Link to="/admin-login" className="btn-login">
+              ADMIN LOGIN
+            </Link>
+          </div>
+        )}
       </nav>
 
       {/* Hero Section */}
@@ -26,7 +62,7 @@ const Home = () => {
         <div className="container hero-grid">
           <div className="hero-content animate-up">
             <div className="pill">Learn From The Best</div>
-            <h2>Top Students from <span>IIT PATNA & BHU</span></h2>
+            <h2>Top Students from <span>IIT PATNA &amp; BHU</span></h2>
             <p className="hero-tagline">
               Build Strong Basics • Think Smart • Learn with Confidence. 
               We provide the ultimate foundation for your child's success.
@@ -35,25 +71,13 @@ const Home = () => {
             <div className="feature-pills">
               <span className="pill">Grades II - X</span>
               <span className="pill">Interactive Learning</span>
-              <span className="pill">AI & Computer Tech</span>
+              <span className="pill">AI &amp; Computer Tech</span>
             </div>
 
             <button className="btn-primary">
               BOOK FREE DEMO
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
             </button>
-          </div>
-
-          <div className="hero-image-container">
-            <img src={heroImg} alt="Students learning" className="hero-image" />
-            <div className="floating-card card-1">
-              <div style={{color: 'var(--primary)', fontWeight: 'bold'}}>95% Success Rate</div>
-              <div style={{fontSize: '0.8rem', color: 'var(--text-muted)'}}>In School Exams</div>
-            </div>
-            <div className="floating-card card-2">
-              <div style={{color: 'var(--primary)', fontWeight: 'bold'}}>IITian Mentors</div>
-              <div style={{fontSize: '0.8rem', color: 'var(--text-muted)'}}>Guiding your future</div>
-            </div>
           </div>
         </div>
       </section>
@@ -71,7 +95,7 @@ const Home = () => {
               <div className="feature-icon">
                 <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"></path><path d="M6 12v5c3 3 9 3 12 0v-5"></path></svg>
               </div>
-              <h3>Expert Faculty</h3>
+              <h3>Top  Students</h3>
               <p>Learn directly from IIT Patna & BHU alumni who understand the nuances of competitive foundation.</p>
             </div>
 
@@ -129,8 +153,9 @@ const Home = () => {
           </div>
           <div className="footer-contact">
             <h4>Quick Links</h4>
+            <p><Link to="/login" style={{color: 'rgba(255,255,255,0.6)', textDecoration: 'none'}}>Student Login</Link></p>
             <p><Link to="/admin-login" style={{color: 'rgba(255,255,255,0.6)', textDecoration: 'none'}}>Admin Login</Link></p>
-            <p>Phone: +91 62873 47004</p>
+            <p>Phone: +91 62873 47004,</p>
           </div>
         </div>
         <div className="container copyright">

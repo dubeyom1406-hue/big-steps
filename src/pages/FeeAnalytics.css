@@ -1,0 +1,150 @@
+.fa-table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 900px;
+}
+
+.fa-table th, .fa-table td {
+    padding: 15px 12px;
+    text-align: left;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.fa-table th {
+    font-weight: 700;
+    color: #64748b;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    background: #f8fafc;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.fa-table td {
+    color: #1e293b;
+    vertical-align: middle;
+}
+
+.fa-table tr:hover td {
+    background: #f8fafc;
+}
+
+.fa-month-pill {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    border: none;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.2s;
+}
+
+.fa-month-pill.due {
+    background: #fef2f2;
+    color: #ef4444;
+    border: 1px solid #fee2e2;
+}
+.fa-month-pill.due:hover {
+    background: #fee2e2;
+    transform: scale(1.1);
+}
+
+.fa-month-pill.paid {
+    background: #ecfdf5;
+    color: #10b981;
+    border: 1px solid #d1fae5;
+}
+.fa-month-pill.paid:hover {
+    background: #d1fae5;
+    transform: scale(1.1);
+}
+
+/* Modal Styles */
+.fa-modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+    backdrop-filter: blur(4px);
+}
+
+.fa-modal {
+    background: white;
+    border-radius: 24px;
+    padding: 40px;
+    width: 90%;
+    max-width: 450px;
+    text-align: center;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+    animation: fa-pop 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes fa-pop {
+    0% { transform: scale(0.8); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+.fa-modal-icon {
+    font-size: 4rem;
+    margin-bottom: 20px;
+}
+
+.fa-modal h2 {
+    color: #1e293b;
+    margin-bottom: 10px;
+    font-size: 1.5rem;
+}
+
+.fa-modal-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 25px;
+}
+
+.fa-btn {
+    padding: 12px 20px;
+    border: none;
+    border-radius: 12px;
+    font-weight: 700;
+    font-size: 1rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    transition: transform 0.2s, opacity 0.2s;
+}
+
+.fa-btn:hover {
+    transform: translateY(-2px);
+    opacity: 0.9;
+}
+
+.fa-btn.whatsapp { background: #25D366; color: white; }
+.fa-btn.email { background: #3b82f6; color: white; }
+.fa-btn.print { background: #1e293b; color: white; }
+
+.fa-btn-close {
+    background: transparent;
+    color: #64748b;
+    border: 1px solid #cbd5e1;
+    padding: 10px 30px;
+    border-radius: 30px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.fa-btn-close:hover {
+    background: #f1f5f9;
+    color: #0f172a;
+}

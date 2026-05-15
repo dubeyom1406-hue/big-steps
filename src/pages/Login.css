@@ -296,12 +296,15 @@
 @media (max-width: 860px) {
   .sl-page { flex-direction: column; }
   .sl-left {
-    width: 100%;
-    padding: 40px 20px 50px;
-    min-height: auto;
-    align-items: center;
-    text-align: center;
+    display: none;
   }
   .sl-headline { font-size: 2rem; }
-  .sl-right { padding: 40px 20px 60px; }
+  .sl-right { 
+    padding: 40px 20px 60px; 
+    min-height: 100vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 }

@@ -9,7 +9,8 @@ const AdmissionForm = () => {
     studentName: '', fatherName: '', motherName: '',
     dob: '', gender: '', classGrade: '', schoolName: '',
     address: '', mobile: '', guardianName: '', guardianMobile: '', email: '',
-    subjects: { math: false, science: false, computer: false, allSubjects: false },
+    loginId: '', password: '',
+    subjects: { math: false, english: false, science: false, sst: false, gk: false, hindi: false, allSubjects: false },
     batchTiming: '', days: '', admissionDate: '',
     admissionFee: '', monthlyFee: '', totalPaid: '', paymentMode: '',
     receiptNo: '', receiptDate: '', receivedFrom: '',
@@ -28,7 +29,7 @@ const AdmissionForm = () => {
       const s = location.state.studentData;
       setForm({
         ...s,
-        subjects: s.subjects || { math: false, science: false, computer: false, allSubjects: false },
+        subjects: s.subjects || { math: false, english: false, science: false, sst: false, gk: false, hindi: false, allSubjects: false },
         receiptFor: s.receiptFor || { admissionFee: false, monthlyFee: false, other: false },
       });
 
@@ -61,7 +62,7 @@ const AdmissionForm = () => {
     }, 100)
   }
 
-  // UPDATED: Save Student via Node.js Backend API
+  // UPDATED: Save or Update Student via Node.js Backend API
   const handleSaveStudent = async () => {
     if(!form.studentName) {
       alert("Please enter Student name!")
@@ -70,15 +71,18 @@ const AdmissionForm = () => {
     
     setIsSaving(true);
     try {
-      const newStudent = {
+      const isUpdate = !!form.id;
+      const studentPayload = {
         ...form,
-        registrationDate: new Date().toLocaleDateString('en-GB'), // DD/MM/YYYY
+        registrationDate: form.registrationDate || new Date().toLocaleDateString('en-GB'), // Keep old or set new
       };
 
-      // Call Central API Utility
-      const response = await apiFetch('/students', {
-          method: 'POST',
-          body: JSON.stringify(newStudent)
+      const url = isUpdate ? `/students/${form.id}` : '/students';
+      const method = isUpdate ? 'PUT' : 'POST';
+
+      const response = await apiFetch(url, {
+          method: method,
+          body: JSON.stringify(studentPayload)
       });
 
       const data = await response.json();
@@ -104,7 +108,8 @@ const AdmissionForm = () => {
       studentName: '', fatherName: '', motherName: '',
       dob: '', gender: '', classGrade: '', schoolName: '',
       address: '', mobile: '', guardianName: '', guardianMobile: '', email: '',
-      subjects: { math: false, science: false, computer: false, allSubjects: false },
+      loginId: '', password: '',
+      subjects: { math: false, english: false, science: false, sst: false, gk: false, hindi: false, allSubjects: false },
       batchTiming: '', days: '', admissionDate: '',
       admissionFee: '', monthlyFee: '', totalPaid: '', paymentMode: '',
       receiptNo: '', receiptDate: '', receivedFrom: '',
@@ -122,7 +127,7 @@ const AdmissionForm = () => {
         <div className="af-modal-overlay">
           <div className="af-modal">
             <div className="af-modal-icon">✅</div>
-            <h2 className="af-modal-title">Student Added Successfully!</h2>
+            <h2 className="af-modal-title">{form.id ? 'Student Updated Successfully!' : 'Student Added Successfully!'}</h2>
             <p className="af-modal-text">The data has been securely saved to the database. What would you like to do next?</p>
             
             <div className="af-modal-actions">
@@ -217,6 +222,14 @@ const AdmissionForm = () => {
                 <label>School Name</label>
                 <input className="af-input" value={form.schoolName} onChange={e => set('schoolName', e.target.value)} placeholder="Enter school name" />
               </div>
+              <div className="af-field-row">
+                <label>Student Login ID</label>
+                <input className="af-input" value={form.loginId} onChange={e => set('loginId', e.target.value)} placeholder="e.g. STU001" required />
+              </div>
+              <div className="af-field-row">
+                <label>Student Password</label>
+                <input className="af-input" value={form.password} onChange={e => set('password', e.target.value)} placeholder="Set password" required />
+              </div>
             </div>
             <div className="af-photo-box" onClick={() => document.getElementById('photoInput').click()}>
               {form.photo ? (
@@ -276,8 +289,11 @@ const AdmissionForm = () => {
               <div className="af-field-row wrap">
                 <label style={{width:'100%',marginBottom:'4px'}}>Choose Subjects (✓):</label>
                 <label className="af-check-label"><input type="checkbox" checked={form.subjects.math} onChange={() => setSubject('math')} /> Math</label>
+                <label className="af-check-label"><input type="checkbox" checked={form.subjects.english} onChange={() => setSubject('english')} /> English</label>
                 <label className="af-check-label"><input type="checkbox" checked={form.subjects.science} onChange={() => setSubject('science')} /> Science</label>
-                <label className="af-check-label"><input type="checkbox" checked={form.subjects.computer} onChange={() => setSubject('computer')} /> Computer</label>
+                <label className="af-check-label"><input type="checkbox" checked={form.subjects.sst} onChange={() => setSubject('sst')} /> SST</label>
+                <label className="af-check-label"><input type="checkbox" checked={form.subjects.gk} onChange={() => setSubject('gk')} /> GK</label>
+                <label className="af-check-label"><input type="checkbox" checked={form.subjects.hindi} onChange={() => setSubject('hindi')} /> Hindi</label>
                 <label className="af-check-label"><input type="checkbox" checked={form.subjects.allSubjects} onChange={() => setSubject('allSubjects')} /> All Subjects</label>
               </div>
               <div className="af-field-row">
@@ -454,13 +470,15 @@ const AdmissionForm = () => {
 
         {/* ── FINAL SAVE ACTION ── */}
         <div className="af-submit-container no-print">
-          {!location.state?.studentData && (
+          {!location.state?.studentData ? (
             <button className="af-save-btn" onClick={handleSaveStudent}>
               ✨ Confirm &amp; Add Student to Database
             </button>
-          )}
-          {location.state?.studentData && (
-            <div style={{display:'flex', gap:'15px'}}>
+          ) : (
+            <div style={{display:'flex', gap:'15px', flexWrap: 'wrap', justifyContent: 'center'}}>
+               <button className="af-save-btn" style={{background:'#10b981'}} onClick={handleSaveStudent}>
+                💾 Update Student Data
+              </button>
                <button className="af-save-btn blue" onClick={() => handlePrint('form')}>
                 📄 Print Form
               </button>

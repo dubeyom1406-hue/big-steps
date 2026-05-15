@@ -84,13 +84,6 @@ const AdminDashboard = () => {
               <p>Revenue</p>
             </div>
           </div>
-          <div className="db-stat-card">
-            <div className="db-stat-icon">📁</div>
-            <div className="db-stat-info">
-              <h3>{stats.activeCourses}</h3>
-              <p>Active Courses</p>
-            </div>
-          </div>
         </section>
 
         {/* Recent Activity / Content Table Placeholder */}

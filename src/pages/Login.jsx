@@ -6,8 +6,8 @@ import { apiFetch } from '../api'
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false)
-  const [studentName, setStudentName] = useState('')
-  const [mobile, setMobile] = useState('')
+  const [loginId, setLoginId] = useState('')
+  const [password, setPassword] = useState('')
   const [loading, setLoading] = useState(false)
   const navigate = useNavigate()
 
@@ -18,7 +18,7 @@ const Login = () => {
     try {
         const response = await apiFetch('/auth/student-login', {
             method: 'POST',
-            body: JSON.stringify({ studentName, mobile })
+            body: JSON.stringify({ loginId, password })
         });
 
         const data = await response.json();
@@ -27,9 +27,9 @@ const Login = () => {
             localStorage.setItem('user_token', data.token);
             localStorage.setItem('student_data', JSON.stringify(data.student));
             alert(`Welcome back, ${data.student.studentName}!`);
-            navigate('/');
+            navigate('/student-dashboard');
         } else {
-            alert(data.message || "Login failed. Check Name and Mobile.");
+            alert(data.message || "Login failed. Check Login ID and Password.");
         }
 
     } catch (err) {
@@ -110,9 +110,9 @@ const Login = () => {
               <input 
                 className="sl-input" 
                 type="text" 
-                placeholder="Student Full Name" 
-                value={studentName}
-                onChange={e => setStudentName(e.target.value)}
+                placeholder="Student Login ID" 
+                value={loginId}
+                onChange={e => setLoginId(e.target.value)}
                 required
               />
             </div>
@@ -124,9 +124,9 @@ const Login = () => {
               <input
                 className="sl-input"
                 type={showPassword ? 'text' : 'password'}
-                placeholder="Registered Mobile Number"
-                value={mobile}
-                onChange={e => setMobile(e.target.value)}
+                placeholder="Student Password"
+                value={password}
+                onChange={e => setPassword(e.target.value)}
                 required
               />
               <button type="button" className="sl-eye" onClick={() => setShowPassword(!showPassword)}>
@@ -142,9 +142,9 @@ const Login = () => {
               <a href="#" className="sl-forgot-link">Forgot Password?</a>
             </div>
 
-            <button type="submit" className="sl-btn-primary">
-              Login Now
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            <button type="submit" className="sl-btn-primary" disabled={loading}>
+              {loading ? 'Logging in...' : 'Login Now'}
+              {!loading && <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>}
             </button>
 
           </form>

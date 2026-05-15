@@ -76,7 +76,7 @@ const AdminLogin = () => {
           <div className="al-badges">
             <div className="al-badge">⚡ High Security</div>
             <div className="al-badge">📊 Data Manager</div>
-            <div className="al-badge">🔑 Staff Only</div>
+            <div className="al-badge">🔑 Admin Only</div>
           </div>
         </div>
 
@@ -90,11 +90,7 @@ const AdminLogin = () => {
             <img src={logoImg} alt="Bright Steps" className="al-logo" />
           </div>
 
-          <h2 className="al-title">Staff Login <span>✦</span></h2>
-          <p className="al-hint">
-            Accessing the dashboard?&nbsp;
-            <Link to="/login">Switch to Student Login</Link>
-          </p>
+          <h2 className="al-title">Admin Login <span>✦</span></h2>
 
           <form className="al-form" onSubmit={handleLogin}>
             <div className="al-input-group">
