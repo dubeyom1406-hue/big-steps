@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import './FeeAnalytics.css';
 
 import { useNavigate } from 'react-router-dom';
+import { apiFetch } from '../api';
 
 // Academic year typically starts from April in India
 const months = ["Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec", "Jan", "Feb", "Mar"];
@@ -18,10 +19,7 @@ const FeeAnalytics = () => {
 
     const fetchStudents = async () => {
         try {
-            const token = localStorage.getItem('user_token');
-            const res = await fetch('https://big-steps.onrender.com/api/students', {
-                headers: { 'Authorization': `Bearer ${token}` }
-            });
+            const res = await apiFetch('/students');
             const data = await res.json();
             setStudents(data);
         } catch (error) {
@@ -51,13 +49,8 @@ const FeeAnalytics = () => {
         setStudents(updatedStudents);
 
         try {
-            const token = localStorage.getItem('user_token');
-            await fetch(`https://big-steps.onrender.com/api/students/${student.id}`, {
+            await apiFetch(`/students/${student.id}`, {
                 method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`
-                },
                 body: JSON.stringify({ ...student, paidMonths: updatedPaidMonths })
             });
             // Show receipt modal for the newly paid month

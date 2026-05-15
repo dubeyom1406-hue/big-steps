@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './AdminMaterials.css';
+import { apiFetch } from '../api';
 
 const AdminMaterials = () => {
     const [materials, setMaterials] = useState([]);
@@ -23,12 +24,9 @@ const AdminMaterials = () => {
     const fetchData = async () => {
         setLoading(true);
         try {
-            const token = localStorage.getItem('user_token');
-            const headers = { 'Authorization': `Bearer ${token}` };
-
             const [matRes, subRes] = await Promise.all([
-                fetch('https://big-steps.onrender.com/api/materials', { headers }),
-                fetch('https://big-steps.onrender.com/api/subjects', { headers })
+                apiFetch('/materials'),
+                apiFetch('/subjects')
             ]);
 
             if (matRes.ok) setMaterials(await matRes.json());
@@ -66,11 +64,12 @@ const AdminMaterials = () => {
         formData.append('file', form.file);
 
         try {
-            const token = localStorage.getItem('user_token');
-            const res = await fetch('https://big-steps.onrender.com/api/materials', {
+            const res = await apiFetch('/materials', {
                 method: 'POST',
-                headers: { 'Authorization': `Bearer ${token}` },
-                body: formData
+                body: formData,
+                headers: {} // apiFetch will handle headers, but for FormData we might need to remove Content-Type. 
+                // Wait, apiFetch sets Content-Type to application/json by default.
+                // For FormData, we must NOT set Content-Type header.
             });
 
             if (res.ok) {
@@ -95,10 +94,8 @@ const AdminMaterials = () => {
     const handleDelete = async (id) => {
         if (!window.confirm("Are you sure you want to delete this material?")) return;
         try {
-            const token = localStorage.getItem('user_token');
-            const res = await fetch(`https://big-steps.onrender.com/api/materials/${id}`, {
-                method: 'DELETE',
-                headers: { 'Authorization': `Bearer ${token}` }
+            const res = await apiFetch(`/materials/${id}`, {
+                method: 'DELETE'
             });
             if (res.ok) {
                 setMaterials(materials.filter(m => m.id !== id));

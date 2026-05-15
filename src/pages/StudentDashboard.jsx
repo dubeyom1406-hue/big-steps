@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import logoImg from '../assets/logo.png';
 import '../pages/AdminDashboard.css';
 import './StudentDashboard.css';
+import { apiFetch } from '../api';
 
 const months = ["Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec", "Jan", "Feb", "Mar"];
 
@@ -27,7 +28,7 @@ const StudentDashboard = () => {
         // Fetch fresh profile data to reflect any updates made by Admin (e.g. Class update)
         const fetchFreshProfile = async () => {
             try {
-                const res = await fetch(`https://big-steps.onrender.com/api/students/${student.id}`);
+                const res = await apiFetch(`/students/${student.id}`);
                 if (res.ok) {
                     const freshStudent = await res.json();
                     setStudentData(freshStudent);
@@ -50,7 +51,7 @@ const StudentDashboard = () => {
         if (!classGrade) return;
         try {
             // Student doesn't need auth token for materials GET API based on our backend code, but we can pass token if needed.
-            const res = await fetch(`https://big-steps.onrender.com/api/materials?classGrade=${classGrade}`);
+            const res = await apiFetch(`/materials?classGrade=${classGrade}`);
             if (res.ok) {
                 setMaterials(await res.json());
             }

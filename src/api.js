@@ -4,12 +4,20 @@
 const BASE_URL = import.meta.env.VITE_API_URL || 'https://big-steps.onrender.com/api';
 
 export const apiFetch = async (endpoint, options = {}) => {
-    const token = localStorage.getItem('admin_token');
+    const adminToken = localStorage.getItem('admin_token');
+    const userToken = localStorage.getItem('user_token');
+    const token = adminToken || userToken;
+    
+    const isFormData = options.body instanceof FormData;
     
     const defaultHeaders = {
-        'Content-Type': 'application/json',
         ...(token && { 'Authorization': `Bearer ${token}` })
     };
+
+    // Only add JSON Content-Type if NOT sending FormData
+    if (!isFormData) {
+        defaultHeaders['Content-Type'] = 'application/json';
+    }
 
     try {
         const response = await fetch(`${BASE_URL}${endpoint}`, {
@@ -20,16 +28,14 @@ export const apiFetch = async (endpoint, options = {}) => {
             }
         });
 
-        // Handle Session Expiry
         if (response.status === 401 || response.status === 403) {
-            // localStorage.removeItem('admin_token');
-            // window.location.href = '/admin-login';
+            // Optional: handle session expiry logic here
         }
 
         return response;
     } catch (error) {
         console.error("API Connectivity Error:", error);
-        throw new Error("Unable to connect to backend server. It might be starting up or sleeping, please wait a minute and try again.");
+        throw new Error("Unable to connect to the server. Render backend might be waking up (takes ~50s). Please refresh after a moment.");
     }
 };
 
