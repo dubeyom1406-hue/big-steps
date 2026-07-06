@@ -1,7 +1,24 @@
 // Central API Configuration
 // Development: 'http://localhost:5000/api'
 // Production:  'https://big-steps.onrender.com/api'
-const BASE_URL = import.meta.env.VITE_API_URL || 'https://big-steps.onrender.com/api';
+const getBaseUrl = () => {
+    if (typeof window !== 'undefined') {
+        const hostname = window.location.hostname;
+        // Check if running on local server/subnet
+        if (
+            hostname === 'localhost' || 
+            hostname === '127.0.0.1' || 
+            hostname.startsWith('192.168.') || 
+            hostname.startsWith('10.') || 
+            hostname.startsWith('172.')
+        ) {
+            return 'http://localhost:5000/api';
+        }
+    }
+    return import.meta.env.VITE_API_URL || 'https://big-steps.onrender.com/api';
+};
+
+const BASE_URL = getBaseUrl();
 
 export const apiFetch = async (endpoint, options = {}) => {
     const adminToken = localStorage.getItem('admin_token');

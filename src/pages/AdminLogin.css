@@ -1,203 +1,388 @@
-/* ── ADMIN LOGIN STYLES ── */
+/* ==========================================
+   PREMIUM LIGHT THEME ADMIN LOGIN - BRIGHT STEPS
+   ========================================== */
 
-@keyframes al-orb-pulse {
-  0%, 100% { transform: scale(1); opacity: 0.4; }
-  50% { transform: scale(1.1); opacity: 0.7; }
+/* Background Animations */
+@keyframes admin-light-glow-1 {
+  0% { transform: translate(0px, 0px) scale(1); }
+  50% { transform: translate(-30px, 30px) scale(1.1); }
+  100% { transform: translate(0px, 0px) scale(1); }
 }
 
-.al-page {
+@keyframes admin-light-glow-2 {
+  0% { transform: translate(0px, 0px) scale(1.05); }
+  50% { transform: translate(30px, -20px) scale(0.95); }
+  100% { transform: translate(0px, 0px) scale(1.05); }
+}
+
+@keyframes secure-pulse-light {
+  0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.5); }
+  70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(220, 38, 38, 0); }
+  100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(220, 38, 38, 0); }
+}
+
+@keyframes card-entry-admin {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Light Theme Container */
+.new-admin-container.light-theme {
   min-height: 100vh;
-  display: flex;
-  font-family: 'Outfit', sans-serif;
-}
-
-.al-left {
-  width: 47%;
-  background: 
-    radial-gradient(circle at 0% 0%, rgba(255, 255, 255, 0.05) 0%, transparent 50%),
-    linear-gradient(135deg, #0d0d1a 0%, #001a38 35%, #002d70 70%, #003a7a 100%);
+  width: 100%;
   position: relative;
-  overflow: hidden;
+  background: linear-gradient(135deg, #f8fafc 0%, #cbd5e1 100%); /* Elegant light grey background */
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
   justify-content: center;
-  padding: 60px 55px;
+  align-items: center;
+  overflow: hidden;
+  font-family: 'Outfit', sans-serif;
+  padding: 2.5rem 1.2rem;
 }
 
-.al-orb {
+/* Security Pastel Glows */
+.new-admin-container.light-theme .admin-glow {
   position: absolute;
   border-radius: 50%;
-  filter: blur(60px);
-  animation: al-orb-pulse 6s ease-in-out infinite;
+  filter: blur(100px);
   pointer-events: none;
-}
-.al-orb-1 {
-  width: 400px; height: 400px;
-  background: radial-gradient(circle, rgba(0, 120, 255, 0.25) 0%, transparent 70%);
-  top: -80px; right: -80px;
-}
-.al-orb-2 {
-  width: 250px; height: 250px;
-  background: radial-gradient(circle, rgba(0, 200, 255, 0.15) 0%, transparent 70%);
-  bottom: 40px; left: -60px;
-  animation-delay: 2s;
+  opacity: 0.5;
 }
 
-.al-particles { position: absolute; inset: 0; pointer-events: none; }
-.al-particle {
+.new-admin-container.light-theme .admin-glow-1 {
+  width: 450px;
+  height: 450px;
+  background: radial-gradient(circle, rgba(254, 205, 211, 0.8) 0%, rgba(254, 242, 242, 0) 70%); /* Soft rose glow */
+  top: -5%;
+  right: 10%;
+  animation: admin-light-glow-1 16s infinite ease-in-out;
+}
+
+.new-admin-container.light-theme .admin-glow-2 {
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(224, 231, 255, 0.8) 0%, rgba(238, 242, 255, 0) 70%); /* Soft lavender glow */
+  bottom: -5%;
+  left: 10%;
+  animation: admin-light-glow-2 20s infinite ease-in-out;
+}
+
+/* Actions Header */
+.light-theme .admin-header-actions {
   position: absolute;
-  width: 5px; height: 5px;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.3);
-  animation: particle-drift 10s ease-in-out infinite;
+  top: 1.5rem;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 2rem;
+  width: 100%;
+  z-index: 10;
 }
 
-.al-left-inner {
-  position: relative;
-  z-index: 2;
-  color: white;
+.light-theme .btn-admin-back-home, 
+.light-theme .btn-switch-student-portal {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 1.2rem;
+  border-radius: 30px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  text-decoration: none;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.04);
 }
 
-.al-icon-wrap {
+.light-theme .btn-admin-back-home {
+  color: #475569;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+}
+
+.light-theme .btn-admin-back-home:hover {
+  color: #0f172a;
+  background: #f8fafc;
+  border-color: #cbd5e1;
+  transform: translateX(-3px);
+}
+
+.light-theme .btn-switch-student-portal {
+  color: #4f46e5;
+  background: rgba(79, 70, 229, 0.08);
+  border: 1px solid rgba(79, 70, 229, 0.18);
+}
+
+.light-theme .btn-switch-student-portal:hover {
+  color: #ffffff;
+  background: #4f46e5;
+  border-color: #4f46e5;
+  box-shadow: 0 4px 15px rgba(79, 70, 229, 0.25);
+  transform: translateY(-2px);
+}
+
+/* Card Wrapper */
+.light-theme .admin-card-wrapper {
   position: relative;
+  z-index: 5;
+  width: 100%;
+  max-width: 480px;
+  margin-top: 4.5rem;
+  animation: card-entry-admin 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Glassmorphic card styling */
+.light-theme .admin-glass-card {
+  background: rgba(255, 255, 255, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border-radius: 24px;
+  padding: 3rem 2.5rem;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.04), 
+              0 1px 3px rgba(0, 0, 0, 0.02),
+              inset 0 1px 0 rgba(255, 255, 255, 0.8);
+  display: flex;
+  flex-direction: column;
+}
+
+/* Admin Security Badge */
+.light-theme .admin-security-badge {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 72px; height: 72px;
-  margin-bottom: 36px;
-}
-
-.al-icon-ring {
-  position: absolute;
-  inset: 0;
-  border-radius: 50%;
-  border: 2px solid rgba(255, 215, 0, 0.3);
-  border-top-color: #ffd700;
-  animation: ring-spin 4s linear infinite;
-}
-
-.al-shield-icon {
-  font-size: 2.2rem;
-  filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.4));
-}
-
-.al-headline {
-  font-size: 3.2rem;
-  font-weight: 800;
-  line-height: 1.1;
-  color: white;
-  margin-bottom: 20px;
-  letter-spacing: -0.04em;
-}
-
-.al-hello {
-  font-weight: 400; font-size: 2rem;
-  color: rgba(255, 255, 255, 0.6);
-  display: block;
-}
-
-.al-brand-name {
-  background: linear-gradient(90deg, #ffffff 0%, #FFD700 60%, #ffb300 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.al-sub {
-  font-size: 1rem;
-  color: rgba(255, 255, 255, 0.65);
-  line-height: 1.7;
-  max-width: 320px;
-  margin-bottom: 36px;
-}
-
-.al-badges { display: flex; flex-wrap: wrap; gap: 10px; }
-.al-badge {
-  padding: 6px 14px;
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  gap: 0.5rem;
+  background: rgba(239, 68, 68, 0.08);
+  border: 1px solid rgba(239, 68, 68, 0.25);
   border-radius: 30px;
+  padding: 0.4rem 0.9rem;
+  margin: 0 auto 1.5rem auto;
+  color: #991b1b;
   font-size: 0.78rem;
-  font-weight: 600;
-  color: white;
-  backdrop-filter: blur(8px);
+  font-weight: 700;
+  letter-spacing: 0.06em;
 }
 
-.al-right {
-  flex: 1;
-  background: #fdfdfd;
+.light-theme .security-pulse {
+  width: 6px;
+  height: 6px;
+  background: #dc2626;
+  border-radius: 50%;
+  animation: secure-pulse-light 1.8s infinite;
+}
+
+/* Brand Section */
+.light-theme .admin-brand-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.light-theme .admin-logo-glow {
+  position: relative;
+  margin-bottom: 0.75rem;
+}
+
+.light-theme .admin-logo {
+  height: 56px;
+  width: auto;
+  object-fit: contain;
+}
+
+.light-theme .admin-main-title {
+  font-size: 1.85rem;
+  font-weight: 800;
+  color: #0f172a;
+  letter-spacing: -0.03em;
+  margin-bottom: 0.4rem;
+  background: none;
+  -webkit-text-fill-color: initial;
+}
+
+.light-theme .admin-main-subtitle {
+  font-size: 0.9rem;
+  color: #475569;
+  line-height: 1.5;
+  max-width: 320px;
+}
+
+/* Error Alert Box */
+.light-theme .admin-error-alert {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  border-radius: 12px;
+  padding: 0.85rem 1rem;
+  margin-bottom: 1.5rem;
+  color: #991b1b;
+  font-size: 0.85rem;
+}
+
+/* Form Styling */
+.light-theme .admin-form-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.light-theme .admin-input-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.light-theme .admin-input-label {
+  font-size: 0.825rem;
+  font-weight: 600;
+  color: #334155;
+  letter-spacing: 0.01em;
+}
+
+.light-theme .admin-input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.light-theme .admin-input-icon {
+  position: absolute;
+  left: 1.1rem;
+  color: #94a3b8;
+  display: flex;
+  align-items: center;
+  pointer-events: none;
+  transition: color 0.25s;
+}
+
+.light-theme .styled-admin-input {
+  width: 100%;
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  border-radius: 12px;
+  padding: 0.9rem 1.1rem 0.9rem 2.8rem;
+  color: #0f172a;
+  font-family: inherit;
+  font-size: 0.95rem;
+  outline: none;
+  transition: all 0.25s ease;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.02);
+}
+
+.light-theme .styled-admin-input::placeholder {
+  color: #94a3b8;
+}
+
+.light-theme .styled-admin-input:focus {
+  border-color: #ef4444;
+  box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.12),
+              inset 0 1px 1px rgba(0, 0, 0, 0.02);
+}
+
+.light-theme .styled-admin-input:focus ~ .admin-input-icon {
+  color: #ef4444;
+}
+
+/* Password eye button */
+.light-theme .btn-admin-toggle-password {
+  position: absolute;
+  right: 1.1rem;
+  background: none;
+  border: none;
+  color: #94a3b8;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 60px 50px;
-}
-
-.al-form-wrap {
-  width: 100%;
-  max-width: 400px;
-}
-
-.al-logo { height: 70px; width: auto; margin-bottom: 20px; margin-top: -10px; display: block; }
-
-.al-title {
-  font-size: 2.2rem;
-  font-weight: 800;
-  color: #0f172a;
-  margin-bottom: 8px;
-}
-
-.al-hint {
-  font-size: 0.88rem;
-  color: #64748b;
-  margin-bottom: 36px;
-}
-.al-hint a { color: #0f172a; font-weight: 700; text-decoration: underline; }
-
-.al-form { display: flex; flex-direction: column; gap: 16px; }
-
-.al-input-group { position: relative; display: flex; align-items: center; }
-
-.al-in-icon {
-  position: absolute; left: 16px;
-  color: #94a3b8;
-  display: flex; align-items: center;
-  z-index: 1;
-}
-
-.al-input {
-  width: 100%;
-  padding: 14px 16px 14px 44px;
-  border: 1.5px solid #e2e8f0;
-  border-radius: 12px;
-  font-family: 'Outfit', sans-serif;
-  font-size: 0.95rem;
-  background: #fff;
-  outline: none;
-  transition: border-color 0.2s;
-}
-
-.al-input:focus { border-color: #0f172a; box-shadow: 0 0 0 3px rgba(15, 23, 42, 0.1); }
-
-.al-btn-primary {
-  width: 100%;
-  padding: 16px;
-  background: #0f172a;
-  color: white;
-  border: none;
-  border-radius: 12px;
-  font-family: 'Outfit', sans-serif;
-  font-size: 1rem;
-  font-weight: 700;
   cursor: pointer;
-  transition: transform 0.2s, background 0.2s;
-  display: flex; align-items: center; justify-content: center; gap: 10px;
+  padding: 0.25rem;
+  transition: color 0.2s;
 }
-.al-btn-primary:hover { background: #1e293b; transform: translateY(-2px); }
 
-@media (max-width: 860px) {
-  .al-page { flex-direction: column; }
-  .al-left { width: 100%; padding: 40px 20px; min-height: auto; align-items: center; text-align: center; }
-  .al-headline { font-size: 2rem; }
-  .al-right { padding: 40px 20px; }
+.light-theme .btn-admin-toggle-password:hover {
+  color: #475569;
+}
+
+/* Authenticate Submit Button */
+.light-theme .btn-submit-admin {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  width: 100%;
+  background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+  border: 1px solid #0f172a;
+  border-radius: 12px;
+  padding: 0.95rem;
+  color: #ffffff;
+  font-size: 0.95rem;
+  font-weight: 700;
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.15);
+  transition: all 0.25s ease;
+  margin-top: 0.3rem;
+  cursor: pointer;
+}
+
+.light-theme .btn-submit-admin:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(15, 23, 42, 0.3);
+  background: linear-gradient(135deg, #334155 0%, #1e293b 100%);
+}
+
+.light-theme .btn-submit-admin:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.light-theme .btn-submit-admin:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.light-theme .admin-submit-icon {
+  color: #ef4444;
+  transition: transform 0.25s;
+}
+
+.light-theme .btn-submit-admin:hover:not(:disabled) .admin-submit-icon {
+  transform: scale(1.1);
+}
+
+/* CSS Loader Spinner */
+.light-theme .admin-loader-spinner {
+  width: 18px;
+  height: 18px;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-top-color: #ef4444;
+  border-radius: 50%;
+  animation: spinner-rotate 0.8s linear infinite;
+}
+
+/* Card Footer Note */
+.light-theme .admin-card-footer {
+  margin-top: 2rem;
+  border-top: 1px solid #e2e8f0;
+  padding-top: 1.5rem;
+  text-align: center;
+}
+
+.light-theme .admin-card-footer p {
+  font-size: 0.8rem;
+  color: #64748b;
+  line-height: 1.5;
+}
+
+/* Responsive Media Queries */
+@media (max-width: 640px) {
+  .light-theme .admin-glass-card {
+    padding: 2.5rem 1.5rem;
+    border-radius: 20px;
+  }
+  
+  .light-theme .admin-main-title {
+    font-size: 1.65rem;
+  }
 }

@@ -1,169 +1,579 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import logoImg from '../assets/logo.png'
-import heroImg from '../assets/hero.png'
+import './LandingPage.css'
 
-const Home = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-
-  return (
-    <div className="landing-page">
-      {/* Navbar */}
-      <nav className="navbar">
-        <div className="navbar-inner container">
-          <div className="logo-container">
-            <img src={logoImg} alt="Bright Steps Coaching Logo" className="logo-main" />
-          </div>
-          
-          {/* Desktop Nav */}
-          <div className="nav-actions desktop-nav" style={{ display: 'flex', gap: '15px' }}>
-            <Link to="/login" className="btn-login" style={{ background: 'linear-gradient(135deg, #3b24e0, #5b45ff)', color: 'white', border: 'none' }}>
-              STUDENT LOGIN
-            </Link>
-            <Link to="/admin-login" className="btn-login">
-              ADMIN LOGIN
-            </Link>
-          </div>
-
-          {/* Hamburger Icon */}
-          <div className="hamburger" onClick={() => setIsMenuOpen(!isMenuOpen)}>
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              {isMenuOpen ? (
-                <>
-                  <line x1="18" y1="6" x2="6" y2="18"></line>
-                  <line x1="6" y1="6" x2="18" y2="18"></line>
-                </>
-              ) : (
-                <>
-                  <line x1="3" y1="12" x2="21" y2="12"></line>
-                  <line x1="3" y1="6" x2="21" y2="6"></line>
-                  <line x1="3" y1="18" x2="21" y2="18"></line>
-                </>
-              )}
-            </svg>
-          </div>
-        </div>
-
-        {/* Mobile Menu */}
-        {isMenuOpen && (
-          <div className="mobile-menu">
-            <Link to="/login" className="btn-login" style={{ background: 'linear-gradient(135deg, #3b24e0, #5b45ff)', color: 'white', border: 'none' }}>
-              STUDENT LOGIN
-            </Link>
-            <Link to="/admin-login" className="btn-login">
-              ADMIN LOGIN
-            </Link>
-          </div>
-        )}
-      </nav>
-
-      {/* Hero Section */}
-      <section className="hero">
-        <div className="container hero-grid">
-          <div className="hero-content animate-up">
-            <div className="pill">Learn From The Best</div>
-            <h2>Top Students from <span>IIT PATNA &amp; BHU</span></h2>
-            <p className="hero-tagline">
-              Build Strong Basics • Think Smart • Learn with Confidence. 
-              We provide the ultimate foundation for your child's success.
-            </p>
-            
-            <div className="feature-pills">
-              <span className="pill">Grades II - X</span>
-              <span className="pill">Interactive Learning</span>
-              <span className="pill">AI &amp; Computer Tech</span>
-            </div>
-
-            <button className="btn-primary">
-              BOOK FREE DEMO
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-            </button>
-          </div>
-        </div>
-      </section>
-
-      {/* Features Section */}
-      <section className="features section-padding">
-        <div className="container">
-          <div className="section-title">
-            <h2>Our Core Offerings</h2>
-            <p>Empowering the next generation of leaders</p>
-          </div>
-
-          <div className="features-grid">
-            <div className="feature-card">
-              <div className="feature-icon">
-                <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"></path><path d="M6 12v5c3 3 9 3 12 0v-5"></path></svg>
-              </div>
-              <h3>Top  Students</h3>
-              <p>Learn directly from IIT Patna & BHU alumni who understand the nuances of competitive foundation.</p>
-            </div>
-
-            <div className="feature-card">
-              <div className="feature-icon">
-                <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
-              </div>
-              <h3>Full Syllabus</h3>
-              <p>Comprehensive coverage for Grades II to X, ensuring no gaps in fundamental concepts.</p>
-            </div>
-
-            <div className="feature-card">
-              <div className="feature-icon">
-                <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
-              </div>
-              <h3>Digital Native</h3>
-              <p>Specialized modules for Computer Science and AI knowledge, preparing students for the future.</p>
-            </div>
-
-            <div className="feature-card">
-              <div className="feature-icon">
-                <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-              </div>
-              <h3>Admissions Open</h3>
-              <p>Enroll now for the current session. Limited seats available for personalized attention.</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="cta-section">
-        <div className="container cta-banner">
-          <div>
-            <h2>Start Your Learning Journey Today</h2>
-            <p style={{color: 'var(--primary)', opacity: 0.8}}>Join Bright Steps Coaching for the Best Results</p>
-          </div>
-          <button className="btn-primary" style={{backgroundColor: 'var(--primary)'}}>
-            ENROLL NOW
-          </button>
-        </div>
-      </section>
-
-      {/* Footer */}
-      <footer>
-        <div className="container footer-grid">
-          <div className="footer-logo">
-            <h2>BRIGHT STEPS</h2>
-            <p style={{opacity: 0.6}}>The Foundation of Excellence</p>
-          </div>
-          <div className="footer-address">
-            <h4>Location</h4>
-            <p>Maharaja Hata, Gali No 3.</p>
-            <p>Near Math Café</p>
-          </div>
-          <div className="footer-contact">
-            <h4>Quick Links</h4>
-            <p><Link to="/login" style={{color: 'rgba(255,255,255,0.6)', textDecoration: 'none'}}>Student Login</Link></p>
-            <p><Link to="/admin-login" style={{color: 'rgba(255,255,255,0.6)', textDecoration: 'none'}}>Admin Login</Link></p>
-            <p>Phone: +91 62873 47004,</p>
-          </div>
-        </div>
-        <div className="container copyright">
-          <p>© 2026 Bright Steps Coaching. All Rights Reserved.</p>
-        </div>
-      </footer>
-    </div>
-  )
+// ── Scroll Reveal Hook ──
+function useScrollReveal() {
+  const ref = useRef(null);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) el.classList.add('visible'); },
+      { threshold: 0.1 }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+  return ref;
 }
 
-export default Home
+// ── Scroll Reveal Component ──
+function Reveal({ children, className = '', delay = '' }) {
+  const ref = useScrollReveal();
+  return (
+    <div ref={ref} className={`lp-reveal ${delay} ${className}`}>
+      {children}
+    </div>
+  );
+}
+
+// ── Data ──
+const programs = [
+  {
+    label: 'Grades II – V', labelColor: 'indigo',
+    icon: '🌱', iconBg: 'bg-indigo',
+    title: 'Foundation Builders',
+    desc: 'Lay the strongest academic base with interactive lessons covering Maths, EVS, English and Hindi. Small batches ensure personal attention.',
+    tags: ['Maths', 'EVS', 'English', 'Hindi', 'Reasoning'],
+    featured: false,
+  },
+  {
+    label: 'Grades VI – X', labelColor: 'yellow',
+    icon: '🚀', iconBg: 'bg-yellow',
+    title: 'Board Excellence Program',
+    desc: 'Structured board preparation with chapter-wise notes, mock tests, and doubt-clearing sessions. Score above 90% with confidence.',
+    tags: ['Science', 'Maths', 'Social', 'Languages', 'Mock Tests'],
+    featured: true,
+  },
+  {
+    label: 'All Grades', labelColor: 'teal',
+    icon: '💻', iconBg: 'bg-teal',
+    title: 'Coding & Digital Skills',
+    desc: 'Future-ready coding curriculum including Python, Scratch, logical thinking and AI basics. Designed for students who want to lead tomorrow.',
+    tags: ['Python', 'Scratch', 'AI Basics', 'Logic', 'Projects'],
+    featured: false,
+  },
+];
+
+const features = [
+  {
+    icon: '👨‍🏫', box: 'y',
+    title: 'Expert & Caring Educators',
+    desc: "Our teachers are passionate about nurturing each student's curiosity. Friendly, supportive, and highly qualified.",
+  },
+  {
+    icon: '📊', box: 'i',
+    title: 'Progress Tracked, Every Step',
+    desc: 'Regular assessments and parent-friendly progress reports keep everyone aligned and motivated.',
+  },
+  {
+    icon: '🧠', box: 't',
+    title: 'Concept-First Approach',
+    desc: 'We believe in understanding over memorisation. Every topic is taught from first principles.',
+  },
+  {
+    icon: '📚', box: 'o',
+    title: 'Rich Study Materials',
+    desc: 'Custom notes, digital materials, and practice sets — everything curated specifically for the curriculum.',
+  },
+];
+
+const testimonials = [
+  {
+    quote: "My daughter struggled with Maths since Grade III. After joining Bright Steps, she not only cleared her board exam but topped her school. The teachers are incredible.",
+    name: 'Priya Sharma',
+    role: 'Parent · Grade X Student',
+    initials: 'PS',
+    gradient: 'linear-gradient(135deg, #4361EE, #06D6A0)',
+  },
+  {
+    quote: "The coding classes are amazing! My son now builds his own small games and is so excited about technology. This has opened a new world for him.",
+    name: 'Rakesh Mishra',
+    role: 'Parent · Grade VII Student',
+    initials: 'RM',
+    gradient: 'linear-gradient(135deg, #FFD200, #FF8C00)',
+  },
+  {
+    quote: "What sets Bright Steps apart is how they truly care. The batch sizes are small, the attention is personal, and the results speak for themselves.",
+    name: 'Sunita Verma',
+    role: 'Parent · Grades IV & VI Students',
+    initials: 'SV',
+    gradient: 'linear-gradient(135deg, #FF8C00, #ff4d6d)',
+  },
+];
+
+// ── Main Component ──
+const Home = () => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [showSplash, setShowSplash] = useState(true);
+  const [fadeOut, setFadeOut] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  // Splash screen logic
+  useEffect(() => {
+    document.body.style.overflow = 'hidden';
+    const timer = setTimeout(() => {
+      setFadeOut(true);
+      const remove = setTimeout(() => {
+        setShowSplash(false);
+        document.body.style.overflow = '';
+      }, 600);
+      return () => clearTimeout(remove);
+    }, 2000);
+    return () => { clearTimeout(timer); document.body.style.overflow = ''; };
+  }, []);
+
+  // Navbar scroll effect
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 20);
+    window.addEventListener('scroll', onScroll);
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
+  return (
+    <>
+      {/* ── SPLASH SCREEN ── */}
+      {showSplash && (
+        <div className={`splash-container ${fadeOut ? 'fade-out' : ''}`}>
+          <div className="splash-logo-wrapper">
+            <div className="splash-glow"></div>
+            <img src={logoImg} alt="Bright Steps Logo" className="splash-logo" />
+          </div>
+        </div>
+      )}
+
+      <div className="lp-root">
+
+        {/* ══════════════════════════════
+            NAVBAR
+        ══════════════════════════════ */}
+        <nav className={`lp-nav ${scrolled ? 'lp-nav-scrolled' : ''}`}>
+          <div className="lp-nav-inner">
+            <img src={logoImg} alt="Bright Steps Coaching" className="lp-logo" />
+
+            {/* Desktop Links */}
+            <div className="lp-nav-links">
+              <Link to="/login" className="lp-nav-btn lp-nav-btn-outline">
+                Student Portal
+              </Link>
+              <Link to="/admin-login" className="lp-nav-btn lp-nav-btn-primary">
+                ✦ Admin Login
+              </Link>
+            </div>
+
+            {/* Hamburger */}
+            <div
+              className={`lp-hamburger ${isMenuOpen ? 'open' : ''}`}
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+            >
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+          </div>
+
+          {/* Mobile Menu */}
+          <div className={`lp-mobile-menu ${isMenuOpen ? 'open' : ''}`}>
+            <Link to="/login" className="lp-nav-btn lp-nav-btn-outline" style={{ textAlign: 'center' }}
+              onClick={() => setIsMenuOpen(false)}>
+              Student Portal
+            </Link>
+            <Link to="/admin-login" className="lp-nav-btn lp-nav-btn-primary" style={{ textAlign: 'center' }}
+              onClick={() => setIsMenuOpen(false)}>
+              ✦ Admin Login
+            </Link>
+          </div>
+        </nav>
+
+        {/* ══════════════════════════════
+            HERO SECTION
+        ══════════════════════════════ */}
+        <section className="lp-hero">
+          <div className="lp-hero-bg">
+            <div className="lp-hero-grid-pattern"></div>
+          </div>
+
+          {/* Floating orbs */}
+          <div className="lp-float-orb lp-orb-1"></div>
+          <div className="lp-float-orb lp-orb-2"></div>
+
+          <div className="lp-container">
+            <div className="lp-hero-inner">
+
+              {/* Left: Content */}
+              <div className="lp-hero-content">
+                <div className="lp-hero-badge">
+                  <span className="lp-hero-badge-dot"></span>
+                  Admissions Open · 2025–26 Session
+                </div>
+
+                <h1 className="lp-hero-title">
+                  Where Strong{' '}
+                  <span className="lp-underline-word">Foundations</span>
+                  <br />
+                  Build{' '}
+                  <span className="lp-highlight">Bright Futures</span>
+                </h1>
+
+                <p className="lp-hero-desc">
+                  Bright Steps Coaching Centre — a place where students from Grade II to X discover
+                  the joy of learning. Expert teachers, small batches, personalised attention,
+                  and a proven approach to academic excellence.
+                </p>
+
+                <div className="lp-hero-actions">
+                  <Link to="/login" className="lp-btn-hero-primary">
+                    Get Started Free
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                      <line x1="5" y1="12" x2="19" y2="12"></line>
+                      <polyline points="12 5 19 12 12 19"></polyline>
+                    </svg>
+                  </Link>
+                  <a href="#programs" className="lp-btn-hero-secondary">
+                    Explore Programs
+                  </a>
+                </div>
+
+                <div className="lp-hero-trust">
+                  <div className="lp-trust-avatars">
+                    {['RS', 'MP', 'AK', 'SK'].map((init, i) => (
+                      <div key={i} className="lp-trust-avatar" style={{ zIndex: 4 - i,
+                        background: ['linear-gradient(135deg,#4361EE,#06D6A0)', 'linear-gradient(135deg,#FFD200,#FF8C00)',
+                          'linear-gradient(135deg,#FF8C00,#ff4d6d)', 'linear-gradient(135deg,#06D6A0,#4361EE)'][i] }}>
+                        {init}
+                      </div>
+                    ))}
+                  </div>
+                  <div className="lp-trust-text">
+                    <strong>500+ students</strong> are already learning<br />
+                    with Bright Steps this year ⭐
+                  </div>
+                </div>
+              </div>
+
+              {/* Right: Visual card */}
+              <div className="lp-hero-visual">
+                <div className="lp-hero-card">
+                  <div className="lp-grade-list">
+                    {[
+                      { icon: '🌱', color: 'yellow', title: 'Foundation Programme', sub: 'Grades II – V', badge: 'Seats Open' },
+                      { icon: '🚀', color: 'indigo', title: 'Board Excellence', sub: 'Grades VI – X', badge: 'Seats Open' },
+                      { icon: '💻', color: 'teal', title: 'Coding & Digital Skills', sub: 'All Grades', badge: 'New Batch' },
+                      { icon: '📐', color: 'orange', title: 'Speed Maths Crash Course', sub: 'Grades IV – VIII', badge: 'Weekend' },
+                    ].map((item, i) => (
+                      <div key={i} className="lp-grade-item">
+                        <div className={`lp-grade-icon ${item.color}`}>{item.icon}</div>
+                        <div className="lp-grade-info">
+                          <h4>{item.title}</h4>
+                          <span>{item.sub}</span>
+                        </div>
+                        <div className="lp-grade-badge">{item.badge}</div>
+                      </div>
+                    ))}
+                  </div>
+
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </section>
+
+
+
+        {/* ══════════════════════════════
+            PROGRAMS SECTION
+        ══════════════════════════════ */}
+        <section className="lp-programs" id="programs">
+          <div className="lp-container">
+            <Reveal className="lp-section-header">
+              <div className="lp-section-tag">Our Programs</div>
+              <h2 className="lp-section-title">
+                Learning Paths for Every{' '}
+                <span className="lp-highlight">Young Mind</span>
+              </h2>
+              <p className="lp-section-subtitle">
+                From building the basics to cracking boards and learning to code — we have a
+                carefully crafted programme that fits your child's needs.
+              </p>
+            </Reveal>
+
+            <div className="lp-programs-grid">
+              {programs.map((prog, i) => (
+                <Reveal key={i} delay={`lp-reveal-delay-${i + 1}`}>
+                  <div className={`lp-program-card ${prog.featured ? 'featured' : ''}`}>
+                    <div className={`lp-program-label ${prog.labelColor}`}>{prog.label}</div>
+                    <div className={`lp-program-icon ${prog.iconBg}`}>{prog.icon}</div>
+                    <h3>{prog.title}</h3>
+                    <p>{prog.desc}</p>
+                    <div className="lp-program-tags">
+                      {prog.tags.map((tag, j) => (
+                        <span key={j} className="lp-program-tag">{tag}</span>
+                      ))}
+                    </div>
+                  </div>
+                </Reveal>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ══════════════════════════════
+            WHY CHOOSE US
+        ══════════════════════════════ */}
+        <section className="lp-features">
+          <div className="lp-container">
+            <div className="lp-features-inner">
+
+              {/* Left — Checklist */}
+              <Reveal className="lp-features-left">
+                <div className="lp-section-tag">Why Bright Steps</div>
+                <h2>
+                  Teaching That Goes{' '}
+                  <span style={{ background: 'linear-gradient(135deg,#FFD200,#FF8C00)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>
+                    Beyond Textbooks
+                  </span>
+                </h2>
+                <p>
+                  We don't just prepare students for exams. We inspire a lifelong love of learning.
+                  Our structured, concept-driven approach ensures every child walks in curious and
+                  walks out confident.
+                </p>
+                <div className="lp-check-list">
+                  {features.map((f, i) => (
+                    <div key={i} className="lp-check-item">
+                      <div className="lp-check-icon">✓</div>
+                      <div className="lp-check-text">
+                        <h4>{f.icon} {f.title}</h4>
+                        <p>{f.desc}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </Reveal>
+
+              {/* Right — Dark Feature Card */}
+              <Reveal className="lp-reveal-delay-2">
+                <div className="lp-feature-dark-card">
+                  <div className="lp-fdc-header">
+                    <div className="lp-fdc-badge">✦ OUR APPROACH</div>
+                    <h3>What Makes Us Different</h3>
+                    <p>A coaching that truly cares about every child's growth — not just marks.</p>
+                  </div>
+                  <div className="lp-fdc-list">
+                    {[
+                      { icon: '👨‍🏫', text: 'Small batches — personal attention for every student' },
+                      { icon: '📐', text: 'Concept-first teaching, not rote learning' },
+                      { icon: '📊', text: 'Regular tests & parent progress updates' },
+                      { icon: '📚', text: 'Custom notes & digital study materials' },
+                      { icon: '💻', text: 'Coding & AI skills for future-ready students' },
+                      { icon: '❤️', text: 'Friendly, supportive & passionate educators' },
+                    ].map((item, i) => (
+                      <div key={i} className="lp-fdc-item">
+                        <span className="lp-fdc-emoji">{item.icon}</span>
+                        <span>{item.text}</span>
+                      </div>
+                    ))}
+                  </div>
+                  <div className="lp-fdc-footer">
+                    <span>📍 Maharaja Hata, Gali No. 3 &nbsp;·&nbsp; 📞 +91 62873 47004</span>
+                  </div>
+                </div>
+              </Reveal>
+
+            </div>
+          </div>
+        </section>
+
+        {/* ══════════════════════════════
+            ENQUIRY SECTION
+        ══════════════════════════════ */}
+        <section className="lp-enquiry">
+          <div className="lp-container">
+            <Reveal className="lp-section-header">
+              <div className="lp-section-tag">Get In Touch</div>
+              <h2 className="lp-section-title">
+                Book a{' '}
+                <span className="lp-highlight">Free Demo Class</span>
+              </h2>
+              <p className="lp-section-subtitle">
+                Interested? Drop your details below and we'll reach out to schedule a free demo session for your child.
+              </p>
+            </Reveal>
+
+            <Reveal className="lp-reveal-delay-1">
+              <div className="lp-enquiry-card">
+                <div className="lp-enquiry-left">
+                  <h3>📍 Visit Us</h3>
+                  <p>Maharaja Hata, Gali No. 3<br />Near Math Café</p>
+                  <h3>📞 Call Us</h3>
+                  <p><a href="tel:+916287347004">+91 62873 47004</a></p>
+                  <h3>🕐 Class Timings</h3>
+                  <div className="lp-timing-list">
+                    <div className="lp-timing-item">
+                      <span>Morning Batch</span><span>7:00 AM – 9:00 AM</span>
+                    </div>
+                    <div className="lp-timing-item">
+                      <span>Afternoon Batch</span><span>2:00 PM – 4:00 PM</span>
+                    </div>
+                    <div className="lp-timing-item">
+                      <span>Evening Batch</span><span>5:00 PM – 7:00 PM</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="lp-enquiry-form">
+                  <div className="lp-form-row">
+                    <div className="lp-form-group">
+                      <label>Student Name</label>
+                      <input type="text" placeholder="Enter student's name" />
+                    </div>
+                    <div className="lp-form-group">
+                      <label>Parent's Phone</label>
+                      <input type="tel" placeholder="+91 XXXXX XXXXX" />
+                    </div>
+                  </div>
+                  <div className="lp-form-row">
+                    <div className="lp-form-group">
+                      <label>Class / Grade</label>
+                      <select>
+                        <option value="">Select Grade</option>
+                        {['Grade II','Grade III','Grade IV','Grade V','Grade VI','Grade VII','Grade VIII','Grade IX','Grade X'].map(g => (
+                          <option key={g}>{g}</option>
+                        ))}
+                      </select>
+                    </div>
+                    <div className="lp-form-group">
+                      <label>Preferred Subject</label>
+                      <select>
+                        <option value="">Select Subject</option>
+                        {['Mathematics','Science','English','Hindi','Social Science','Computer / Coding','All Subjects'].map(s => (
+                          <option key={s}>{s}</option>
+                        ))}
+                      </select>
+                    </div>
+                  </div>
+                  <div className="lp-form-group">
+                    <label>Message (Optional)</label>
+                    <textarea placeholder="Any specific requirement or question?" rows={3}></textarea>
+                  </div>
+                  <button className="lp-btn-hero-primary" style={{ width: '100%', justifyContent: 'center' }}>
+                    Send Enquiry
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                      <line x1="5" y1="12" x2="19" y2="12"></line>
+                      <polyline points="12 5 19 12 12 19"></polyline>
+                    </svg>
+                  </button>
+                </div>
+              </div>
+            </Reveal>
+          </div>
+        </section>
+
+        {/* ══════════════════════════════
+            CTA SECTION
+        ══════════════════════════════ */}
+        <section className="lp-cta">
+          <div className="lp-container">
+            <Reveal>
+              <div className="lp-cta-inner">
+                <div className="lp-cta-glow"></div>
+                <div className="lp-cta-tag">Limited Seats Available</div>
+                <h2>
+                  Give Your Child the<br />
+                  <span style={{ background: 'linear-gradient(135deg,#FFD200,#FF8C00)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>
+                    Head Start They Deserve
+                  </span>
+                </h2>
+                <p>
+                  Join Bright Steps today. Book a free demo session and experience the difference
+                  quality teaching makes.
+                </p>
+                <div className="lp-cta-actions">
+                  <Link to="/login" className="lp-btn-cta-primary">
+                    Book Free Demo Session
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                      <line x1="5" y1="12" x2="19" y2="12"></line>
+                      <polyline points="12 5 19 12 12 19"></polyline>
+                    </svg>
+                  </Link>
+                  <a href="tel:+916287347004" className="lp-btn-cta-secondary">
+                    📞 Call Us Now
+                  </a>
+                </div>
+              </div>
+            </Reveal>
+          </div>
+        </section>
+
+        {/* ══════════════════════════════
+            FOOTER
+        ══════════════════════════════ */}
+        <footer className="lp-footer">
+          <div className="lp-container">
+            <div className="lp-footer-grid">
+
+              {/* Brand */}
+              <div className="lp-footer-brand">
+                <img src={logoImg} alt="Bright Steps Logo" />
+                <p>
+                  Bright Steps Coaching Centre — nurturing young minds in Maharaja Hata
+                  with quality education for Grades II to X and digital skills.
+                </p>
+                <div className="lp-footer-social">
+                  {['📘', '📸', '▶️', '📞'].map((icon, i) => (
+                    <a key={i} href="#" className="lp-social-btn">{icon}</a>
+                  ))}
+                </div>
+              </div>
+
+              {/* Programs */}
+              <div className="lp-footer-col">
+                <h4>Programs</h4>
+                <ul>
+                  <li><a href="#programs">Foundation (Gr. II–V)</a></li>
+                  <li><a href="#programs">Board Prep (Gr. VI–X)</a></li>
+                  <li><a href="#programs">Coding & AI Basics</a></li>
+                  <li><a href="#programs">Speed Maths</a></li>
+                </ul>
+              </div>
+
+              {/* Portal */}
+              <div className="lp-footer-col">
+                <h4>Portal</h4>
+                <ul>
+                  <li><Link to="/login">Student Login</Link></li>
+                  <li><Link to="/admin-login">Admin Login</Link></li>
+                </ul>
+              </div>
+
+              {/* Contact */}
+              <div className="lp-footer-col">
+                <h4>Contact</h4>
+                <ul>
+                  <li><a href="tel:+916287347004">+91 62873 47004</a></li>
+                  <li><a href="#">Maharaja Hata, Gali No. 3</a></li>
+                  <li><a href="#">Near Math Café</a></li>
+                </ul>
+              </div>
+
+            </div>
+
+            <div className="lp-footer-bottom">
+              <span>© 2026 Bright Steps Coaching. All rights reserved.</span>
+              <div className="lp-footer-bottom-right">
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Use</a>
+              </div>
+            </div>
+          </div>
+        </footer>
+
+      </div>
+    </>
+  );
+};
+
+export default Home;

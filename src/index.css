@@ -77,3 +77,81 @@ button {
 .animate-up {
   animation: fadeInUp 0.8s ease-out forwards;
 }
+
+/* Splash Screen Styles */
+.splash-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: #ffffff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.6s;
+  opacity: 1;
+  visibility: visible;
+}
+
+.splash-container.fade-out {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.splash-logo-wrapper {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.splash-logo {
+  max-width: 250px;
+  height: auto;
+  object-fit: contain;
+  animation: splashScaleAndPulse 2s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+
+/* Subtle background glowing pulse behind the logo */
+.splash-glow {
+  position: absolute;
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, rgba(0, 33, 71, 0.08) 0%, rgba(255, 255, 255, 0) 70%);
+  border-radius: 50%;
+  animation: splashGlowPulse 2s ease-in-out infinite alternate;
+  z-index: -1;
+}
+
+@keyframes splashScaleAndPulse {
+  0% {
+    transform: scale(0.6);
+    opacity: 0;
+  }
+  30% {
+    transform: scale(1.05);
+    opacity: 1;
+  }
+  70% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1.02);
+    opacity: 1;
+  }
+}
+
+@keyframes splashGlowPulse {
+  0% {
+    transform: scale(0.8);
+    opacity: 0.3;
+  }
+  100% {
+    transform: scale(1.2);
+    opacity: 1;
+  }
+}
+

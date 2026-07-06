@@ -52,8 +52,8 @@ const AllStudents = () => {
     }
 
     const filteredStudents = students.filter(s => {
-        const matchesSearch = s.studentName.toLowerCase().includes(search.toLowerCase()) || 
-                             s.fatherName.toLowerCase().includes(search.toLowerCase()) ||
+        const matchesSearch = (s.studentName || '').toLowerCase().includes(search.toLowerCase()) || 
+                             (s.fatherName || '').toLowerCase().includes(search.toLowerCase()) ||
                              (s.mobile && s.mobile.includes(search))
         const matchesClass = classFilter === 'All' || s.classGrade === classFilter
         return matchesSearch && matchesClass

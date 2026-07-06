@@ -5,11 +5,13 @@ import './AdmissionForm.css'
 import { apiFetch } from '../api'
 
 const AdmissionForm = () => {
+  const [batches, setBatches] = useState([])
   const [form, setForm] = useState({
     studentName: '', fatherName: '', motherName: '',
     dob: '', gender: '', classGrade: '', schoolName: '',
     address: '', mobile: '', guardianName: '', guardianMobile: '', email: '',
     loginId: '', password: '',
+    batchId: '', enrolledBatches: [],
     subjects: { math: false, english: false, science: false, sst: false, gk: false, hindi: false, allSubjects: false },
     batchTiming: '', days: '', admissionDate: '',
     admissionFee: '', monthlyFee: '', totalPaid: '', paymentMode: '',
@@ -23,6 +25,18 @@ const AdmissionForm = () => {
   const [showModal, setShowModal] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   const location = useLocation();
+
+  useEffect(() => {
+    const fetchBatches = async () => {
+      try {
+        const res = await apiFetch('/batches');
+        if (res.ok) setBatches(await res.json());
+      } catch (e) {
+        console.error(e);
+      }
+    };
+    fetchBatches();
+  }, []);
 
   useEffect(() => {
     if (location.state && location.state.studentData) {
@@ -68,12 +82,21 @@ const AdmissionForm = () => {
       alert("Please enter Student name!")
       return
     }
+    if(!form.email) {
+      alert("Please enter Student Email address! (Required for student portal login)")
+      return
+    }
+    if(!form.batchId) {
+      alert("Please assign a Batch to the student!")
+      return
+    }
     
     setIsSaving(true);
     try {
       const isUpdate = !!form.id;
       const studentPayload = {
         ...form,
+        enrolledBatches: form.batchId ? [form.batchId] : (form.enrolledBatches || []),
         registrationDate: form.registrationDate || new Date().toLocaleDateString('en-GB'), // Keep old or set new
       };
 
@@ -109,6 +132,7 @@ const AdmissionForm = () => {
       dob: '', gender: '', classGrade: '', schoolName: '',
       address: '', mobile: '', guardianName: '', guardianMobile: '', email: '',
       loginId: '', password: '',
+      batchId: '', enrolledBatches: [],
       subjects: { math: false, english: false, science: false, sst: false, gk: false, hindi: false, allSubjects: false },
       batchTiming: '', days: '', admissionDate: '',
       admissionFee: '', monthlyFee: '', totalPaid: '', paymentMode: '',
@@ -275,8 +299,8 @@ const AdmissionForm = () => {
                 <input className="af-input" type="tel" maxLength={10} value={form.guardianMobile} onChange={e => set('guardianMobile', e.target.value)} placeholder="Guardian mobile" />
               </div>
               <div className="af-field-row">
-                <label>Email (Optional)</label>
-                <input className="af-input" type="email" value={form.email} onChange={e => set('email', e.target.value)} placeholder="Email address" />
+                <label>Email Address *</label>
+                <input className="af-input" type="email" value={form.email || ''} onChange={e => set('email', e.target.value)} placeholder="Email address (Required for student portal)" required />
               </div>
             </div>
           </div>
@@ -295,6 +319,15 @@ const AdmissionForm = () => {
                 <label className="af-check-label"><input type="checkbox" checked={form.subjects.gk} onChange={() => setSubject('gk')} /> GK</label>
                 <label className="af-check-label"><input type="checkbox" checked={form.subjects.hindi} onChange={() => setSubject('hindi')} /> Hindi</label>
                 <label className="af-check-label"><input type="checkbox" checked={form.subjects.allSubjects} onChange={() => setSubject('allSubjects')} /> All Subjects</label>
+              </div>
+              <div className="af-field-row">
+                <label>Assign Batch *</label>
+                <select className="af-input" value={form.batchId || ''} onChange={e => set('batchId', e.target.value)} required style={{ padding: '8px 12px', border: '1px solid #cbd5e1', borderRadius: '6px' }}>
+                  <option value="">-- Select enrolled batch --</option>
+                  {batches.map(b => (
+                    <option key={b.id} value={b.id}>{b.name} ({b.language})</option>
+                  ))}
+                </select>
               </div>
               <div className="af-field-row">
                 <label>Batch Timing</label>

@@ -1,0 +1,143 @@
+/* AdminBatches.css */
+
+.ab-root {
+  padding: 24px 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.ab-toast {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #1a1d2e;
+  color: #fff;
+  padding: 12px 24px;
+  border-radius: 50px;
+  font-size: 13px;
+  font-weight: 500;
+  z-index: 1000;
+  animation: toastIn 0.3s ease, toastOut 0.3s ease 2.5s forwards;
+}
+
+@keyframes toastIn  { from { opacity: 0; transform: translateX(-50%) translateY(20px); } to { opacity: 1; transform: translateX(-50%) translateY(0); } }
+@keyframes toastOut { from { opacity: 1; } to { opacity: 0; } }
+
+/* ── Header ── */
+.ab-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+.ab-title { font-size: 24px; font-weight: 700; color: #111827; margin-bottom: 4px; }
+.ab-subtitle { font-size: 14px; color: #6b7280; }
+.ab-create-btn {
+  display: flex; align-items: center; gap: 8px;
+  background: #5b4fcf; color: #fff;
+  border: none; padding: 10px 20px;
+  border-radius: 8px; font-size: 14px; font-weight: 600;
+  cursor: pointer; transition: background 0.2s;
+}
+.ab-create-btn:hover { background: #4a3eb8; }
+
+/* ── Form Card ── */
+.ab-form-card {
+  background: #fff;
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+  border: 1px solid #e5e7eb;
+  animation: slideDown 0.3s ease;
+}
+@keyframes slideDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+
+.ab-form-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+.ab-form-header h2 { font-size: 18px; font-weight: 700; color: #1f2937; }
+.ab-form-close { background: #f3f4f6; border: none; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; color: #6b7280; font-size: 16px; display: flex; align-items: center; justify-content: center; }
+.ab-form-close:hover { background: #e5e7eb; color: #1f2937; }
+
+.ab-form { display: flex; flex-direction: column; gap: 16px; }
+.ab-form-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; }
+
+.ab-field { display: flex; flex-direction: column; gap: 6px; }
+.ab-field label { font-size: 13px; font-weight: 600; color: #374151; }
+.ab-field input, .ab-field select, .ab-field textarea {
+  padding: 10px 12px;
+  border: 1.5px solid #d1d5db;
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 14px;
+  transition: border-color 0.2s;
+}
+.ab-field input:focus, .ab-field select:focus, .ab-field textarea:focus {
+  outline: none; border-color: #5b4fcf;
+}
+.ab-field textarea { resize: vertical; }
+
+.ab-toggle-row { margin: 8px 0; }
+.ab-toggle-label { display: flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 600; cursor: pointer; color: #374151; user-select: none; }
+.ab-toggle { width: 44px; height: 24px; background: #d1d5db; border-radius: 24px; position: relative; transition: background 0.2s; }
+.ab-toggle::after { content: ''; position: absolute; left: 2px; top: 2px; width: 20px; height: 20px; background: #fff; border-radius: 50%; transition: transform 0.2s; }
+.ab-toggle.on { background: #5b4fcf; }
+.ab-toggle.on::after { transform: translateX(20px); }
+
+/* Schedule Builder */
+.ab-schedule-section {
+  background: #f9fafb; padding: 20px; border-radius: 12px; border: 1px solid #e5e7eb;
+}
+.ab-schedule-section h3 { font-size: 15px; font-weight: 700; margin-bottom: 12px; color: #1f2937; }
+.ab-schedule-list { display: flex; flex-direction: column; gap: 8px; margin-bottom: 12px; }
+.ab-schedule-item {
+  display: grid; grid-template-columns: 2fr 2fr 1.5fr 1.5fr auto; gap: 10px;
+  align-items: center; background: #fff; padding: 10px 14px; border-radius: 8px; border: 1px solid #e5e7eb; font-size: 13px; color: #4b5563;
+}
+.ab-schedule-subj { font-weight: 600; color: #111827; }
+.ab-rm-btn { background: #fee2e2; color: #dc2626; border: none; width: 28px; height: 28px; border-radius: 6px; cursor: pointer; font-size: 12px; }
+.ab-rm-btn:hover { background: #fecaca; }
+
+.ab-add-class-row { display: grid; grid-template-columns: 2fr 2fr 1.5fr 1.5fr auto; gap: 10px; }
+.ab-add-class-row input, .ab-add-class-row select { padding: 8px 12px; border: 1px solid #d1d5db; border-radius: 6px; font-size: 13px; }
+.ab-add-btn { background: #1f2937; color: #fff; border: none; padding: 0 16px; border-radius: 6px; font-weight: 600; cursor: pointer; transition: background 0.2s; }
+.ab-add-btn:hover { background: #111827; }
+
+/* Form Actions */
+.ab-form-actions { display: flex; justify-content: flex-end; gap: 12px; margin-top: 10px; padding-top: 20px; border-top: 1px solid #e5e7eb; }
+.ab-cancel-btn { padding: 10px 20px; background: transparent; border: 1.5px solid #d1d5db; color: #4b5563; border-radius: 8px; font-weight: 600; cursor: pointer; }
+.ab-cancel-btn:hover { background: #f3f4f6; }
+.ab-save-btn { padding: 10px 24px; background: #5b4fcf; border: none; color: #fff; border-radius: 8px; font-weight: 600; cursor: pointer; }
+.ab-save-btn:hover { background: #4a3eb8; }
+.ab-save-btn:disabled { opacity: 0.7; cursor: not-allowed; }
+
+/* ── Table ── */
+.ab-loading, .ab-empty { text-align: center; padding: 60px 20px; background: #fff; border-radius: 16px; border: 1px solid #e5e7eb; }
+.ab-empty span { font-size: 48px; display: block; margin-bottom: 12px; }
+.ab-empty p { color: #6b7280; }
+
+.ab-batch-table-wrap { overflow-x: auto; background: #fff; border-radius: 16px; border: 1px solid #e5e7eb; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
+.ab-table { width: 100%; border-collapse: collapse; min-width: 900px; }
+.ab-table th { background: #f9fafb; text-align: left; padding: 16px; font-size: 12px; font-weight: 600; color: #6b7280; text-transform: uppercase; border-bottom: 1px solid #e5e7eb; }
+.ab-table td { padding: 16px; border-bottom: 1px solid #e5e7eb; vertical-align: middle; }
+.ab-table tr:last-child td { border-bottom: none; }
+.ab-table tr:hover { background: #f9fafb; }
+
+.ab-name-cell { display: flex; flex-direction: column; gap: 4px; }
+.ab-tag { align-self: flex-start; font-size: 10px; font-weight: 700; background: #ede9ff; color: #5b4fcf; padding: 2px 6px; border-radius: 4px; }
+.ab-cls-count { font-size: 12px; font-weight: 600; background: #f3f4f6; padding: 4px 10px; border-radius: 20px; color: #4b5563; display: inline-block; }
+
+.ab-action-btns { display: flex; gap: 8px; align-items: center; }
+.ab-edit-btn { background: #ede9ff; color: #5b4fcf; border: none; padding: 6px 12px; border-radius: 6px; font-size: 13px; font-weight: 600; cursor: pointer; }
+.ab-edit-btn:hover { background: #ddd6fe; }
+.ab-del-btn { background: #fee2e2; color: #dc2626; border: none; padding: 6px 12px; border-radius: 6px; font-size: 13px; font-weight: 600; cursor: pointer; }
+.ab-del-btn:hover { background: #fecaca; }
+
+.ab-confirm-del { background: #dc2626; color: #fff; border: none; padding: 6px 12px; border-radius: 6px; font-size: 13px; font-weight: 600; cursor: pointer; }
+.ab-cancel-del { background: #f3f4f6; color: #4b5563; border: none; padding: 6px 12px; border-radius: 6px; font-size: 13px; font-weight: 600; cursor: pointer; }
+
+@media (max-width: 768px) {
+  .ab-root { padding: 16px; }
+  .ab-add-class-row { grid-template-columns: 1fr; }
+}

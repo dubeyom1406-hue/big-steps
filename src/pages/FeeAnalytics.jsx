@@ -20,8 +20,12 @@ const FeeAnalytics = () => {
     const fetchStudents = async () => {
         try {
             const res = await apiFetch('/students');
-            const data = await res.json();
-            setStudents(data);
+            if (res.ok) {
+                const data = await res.json();
+                setStudents(Array.isArray(data) ? data : []);
+            } else {
+                console.error("Failed to fetch students:", res.statusText);
+            }
         } catch (error) {
             console.error("Error fetching students", error);
         } finally {

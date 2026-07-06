@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Link, Outlet, useLocation } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import logoImg from '../assets/logo.png';
 import '../pages/AdminDashboard.css';
 
@@ -7,6 +7,20 @@ const AdminLayout = () => {
   const [isSidebarExpanded, setIsSidebarExpanded] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const adminToken = localStorage.getItem('admin_token');
+    if (!adminToken) {
+      navigate('/admin-login');
+    }
+  }, [navigate]);
+
+  const handleAdminLogout = () => {
+    localStorage.removeItem('admin_token');
+    localStorage.removeItem('admin_user');
+    navigate('/login');
+  };
 
   const menuItems = [
     {
@@ -43,25 +57,11 @@ const AdminLayout = () => {
       )
     },
     {
-      label: 'Subjects',
-      path: '/subjects',
+      label: 'Batches',
+      path: '/batches',
       icon: (
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-          <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
-          <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
-        </svg>
-      )
-    },
-    {
-      label: 'Materials',
-      path: '/materials',
-      icon: (
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-          <polyline points="14 2 14 8 20 8"/>
-          <line x1="16" y1="13" x2="8" y2="13"/>
-          <line x1="16" y1="17" x2="8" y2="17"/>
-          <polyline points="10 9 9 9 8 9"/>
+          <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
         </svg>
       )
     },
@@ -141,7 +141,7 @@ const AdminLayout = () => {
         </nav>
 
         <div className="db-side-bottom">
-          <Link to="/login" className="db-logout">
+          <button onClick={handleAdminLogout} className="db-logout">
             <span className="db-nav-icon">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
@@ -150,7 +150,7 @@ const AdminLayout = () => {
               </svg>
             </span>
             <span className="db-nav-label">Logout</span>
-          </Link>
+          </button>
         </div>
       </aside>
 
