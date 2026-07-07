@@ -689,24 +689,6 @@ const SMyBatches = ({ studentData, setActiveSection }) => {
                   {batch.language && <span className="batch-card-badge" style={{ background: '#eff6ff', color: '#3b82f6' }}>{batch.language}</span>}
                   {batch.targetAudience && <span className="batch-card-for" style={{ color: '#64748b', fontWeight: '600' }}>{batch.targetAudience}</span>}
                 </div>
-
-                {/* Progress bar visual mockup */}
-                <div style={{ margin: '12px 0 8px' }}>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '11px', color: '#64748b', fontWeight: '700', marginBottom: '4px' }}>
-                    <span>SYLLABUS COVERAGE</span>
-                    <span>55% COMPLETE</span>
-                  </div>
-                  <div style={{ height: '6px', background: '#f1f5f9', borderRadius: '10px', overflow: 'hidden' }}>
-                    <div style={{ height: '100%', width: '55%', background: '#3b82f6', borderRadius: '10px' }} />
-                  </div>
-                </div>
-
-                {(batch.startDate || batch.endDate) && (
-                  <div className="batch-card-dates" style={{ fontSize: '12px', color: '#64748b', marginTop: '10px' }}>
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-                    {batch.startDate} – {batch.endDate}
-                  </div>
-                )}
               </div>
 
               {/* Action Button */}
