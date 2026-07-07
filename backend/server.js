@@ -7,6 +7,8 @@ const multer = require('multer');
 const fs = require('fs');
 const path = require('path');
 const nodemailer = require('nodemailer');
+const dns = require('dns');
+dns.setDefaultResultOrder('ipv4first'); // Force IPv4 — Render free tier has no IPv6 support
 require('dotenv').config();
 
 const emailUser = process.env.EMAIL_USER ? process.env.EMAIL_USER.trim() : '';
