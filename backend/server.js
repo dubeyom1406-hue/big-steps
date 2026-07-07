@@ -27,14 +27,17 @@ const transporter = nodemailer.createTransport({
 });
 
 // Verify SMTP transporter connection at startup
+console.log(`📧 Email Config: USER=${emailUser ? emailUser.substring(0, 5) + '***' : '(NOT SET)'}, PASS=${emailPass ? '****set****' : '(NOT SET)'}`);
 if (emailUser && emailPass && emailUser !== 'your-email@gmail.com') {
     transporter.verify(function (error, success) {
         if (error) {
-            console.error("❌ SMTP Transporter Verification Failed:", error);
+            console.error("❌ SMTP Transporter Verification Failed:", error.message);
         } else {
             console.log("✅ SMTP Server is ready to send emails");
         }
     });
+} else {
+    console.warn("⚠️ SMTP NOT configured — emails will NOT be sent. Set EMAIL_USER & EMAIL_PASS env vars.");
 }
 
 // Helper function to send OTP email
