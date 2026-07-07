@@ -110,6 +110,35 @@ const Home = () => {
   const [showSplash, setShowSplash] = useState(true);
   const [fadeOut, setFadeOut] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [enquiry, setEnquiry] = useState({
+    studentName: '',
+    phone: '',
+    grade: '',
+    subject: '',
+    message: ''
+  });
+
+  const handleEnquirySubmit = (e) => {
+    e.preventDefault();
+    const to = "brightstepsfoundationclasses@gmail.com";
+    const subject = `Admission Enquiry for ${enquiry.studentName}`;
+    const body = `Hello Bright Steps Team,
+
+I would like to make an enquiry for admission. Here are the details:
+
+- Student Name: ${enquiry.studentName}
+- Parent's Phone: ${enquiry.phone}
+- Class/Grade: ${enquiry.grade || 'Not Selected'}
+- Preferred Subject: ${enquiry.subject || 'Not Selected'}
+- Message: ${enquiry.message || 'None'}
+
+Please reach out to me.
+
+Thank you!`;
+
+    const mailtoUrl = `mailto:${to}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    window.location.href = mailtoUrl;
+  };
 
   // Splash screen logic
   useEffect(() => {
@@ -371,7 +400,7 @@ const Home = () => {
                     ))}
                   </div>
                   <div className="lp-fdc-footer">
-                    <span>📍 Maharaja Hata, Gali No. 3 &nbsp;·&nbsp; 📞 +91 62873 47004</span>
+                    <span>📍 Maharaja Hata, Gali No. 3 &nbsp;·&nbsp; 📞 <a href="tel:+916287347004" style={{ color: 'inherit', textDecoration: 'none', fontWeight: 'bold' }}>+91 62873 47004</a></span>
                   </div>
                 </div>
               </Reveal>
@@ -402,7 +431,11 @@ const Home = () => {
                   <h3>📍 Visit Us</h3>
                   <p>Maharaja Hata, Gali No. 3<br />Near Math Café</p>
                   <h3>📞 Call Us</h3>
-                  <p><a href="tel:+916287347004">+91 62873 47004</a></p>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', marginBottom: '20px' }}>
+                    <a href="tel:+916287347004" style={{ textDecoration: 'none', color: 'inherit', fontWeight: 'bold' }}>📞 +91 62873 47004</a>
+                    <a href="tel:+919504961730" style={{ textDecoration: 'none', color: 'inherit', fontWeight: 'bold' }}>📞 +91 95049 61730</a>
+                    <a href="tel:+919931426338" style={{ textDecoration: 'none', color: 'inherit', fontWeight: 'bold' }}>📞 +91 99314 26338</a>
+                  </div>
                   <h3>🕐 Class Timings</h3>
                   <div className="lp-timing-list">
                     <div className="lp-timing-item">
@@ -411,49 +444,72 @@ const Home = () => {
                   </div>
                 </div>
 
-                <div className="lp-enquiry-form">
+                <form className="lp-enquiry-form" onSubmit={handleEnquirySubmit}>
                   <div className="lp-form-row">
                     <div className="lp-form-group">
                       <label>Student Name</label>
-                      <input type="text" placeholder="Enter student's name" />
+                      <input 
+                        type="text" 
+                        placeholder="Enter student's name" 
+                        value={enquiry.studentName}
+                        onChange={e => setEnquiry({...enquiry, studentName: e.target.value})}
+                        required
+                      />
                     </div>
                     <div className="lp-form-group">
                       <label>Parent's Phone</label>
-                      <input type="tel" placeholder="+91 XXXXX XXXXX" />
+                      <input 
+                        type="tel" 
+                        placeholder="+91 XXXXX XXXXX" 
+                        value={enquiry.phone}
+                        onChange={e => setEnquiry({...enquiry, phone: e.target.value})}
+                        required
+                      />
                     </div>
                   </div>
                   <div className="lp-form-row">
                     <div className="lp-form-group">
                       <label>Class / Grade</label>
-                      <select>
+                      <select 
+                        value={enquiry.grade}
+                        onChange={e => setEnquiry({...enquiry, grade: e.target.value})}
+                      >
                         <option value="">Select Grade</option>
                         {['Grade II','Grade III','Grade IV','Grade V','Grade VI','Grade VII','Grade VIII','Grade IX','Grade X'].map(g => (
-                          <option key={g}>{g}</option>
+                          <option key={g} value={g}>{g}</option>
                         ))}
                       </select>
                     </div>
                     <div className="lp-form-group">
                       <label>Preferred Subject</label>
-                      <select>
+                      <select 
+                        value={enquiry.subject}
+                        onChange={e => setEnquiry({...enquiry, subject: e.target.value})}
+                      >
                         <option value="">Select Subject</option>
                         {['Mathematics','Science','English','Hindi','Social Science','Computer / Coding','All Subjects'].map(s => (
-                          <option key={s}>{s}</option>
+                          <option key={s} value={s}>{s}</option>
                         ))}
                       </select>
                     </div>
                   </div>
                   <div className="lp-form-group">
                     <label>Message (Optional)</label>
-                    <textarea placeholder="Any specific requirement or question?" rows={3}></textarea>
+                    <textarea 
+                      placeholder="Any specific requirement or question?" 
+                      rows={3}
+                      value={enquiry.message}
+                      onChange={e => setEnquiry({...enquiry, message: e.target.value})}
+                    ></textarea>
                   </div>
-                  <button className="lp-btn-hero-primary" style={{ width: '100%', justifyContent: 'center' }}>
+                  <button type="submit" className="lp-btn-hero-primary" style={{ width: '100%', justifyContent: 'center' }}>
                     Send Enquiry
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                       <line x1="5" y1="12" x2="19" y2="12"></line>
                       <polyline points="12 5 19 12 12 19"></polyline>
                     </svg>
                   </button>
-                </div>
+                </form>
               </div>
             </Reveal>
           </div>
@@ -539,7 +595,9 @@ const Home = () => {
               <div className="lp-footer-col">
                 <h4>Contact</h4>
                 <ul>
-                  <li><a href="tel:+916287347004">+91 62873 47004</a></li>
+                  <li><a href="tel:+916287347004">📞 +91 62873 47004</a></li>
+                  <li><a href="tel:+919504961730">📞 +91 95049 61730</a></li>
+                  <li><a href="tel:+919931426338">📞 +91 99314 26338</a></li>
                   <li><a href="#">Maharaja Hata, Gali No. 3</a></li>
                   <li><a href="#">Near Math Café</a></li>
                 </ul>
