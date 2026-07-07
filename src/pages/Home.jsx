@@ -432,9 +432,9 @@ Thank you!`;
                   <p>Maharaja Hata, Gali No. 3<br />Near Math Café</p>
                   <h3>📞 Call Us</h3>
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', marginBottom: '20px' }}>
-                    <a href="tel:+916287347004" style={{ textDecoration: 'none', color: 'inherit', fontWeight: 'bold' }}>📞 +91 62873 47004</a>
-                    <a href="tel:+919504961730" style={{ textDecoration: 'none', color: 'inherit', fontWeight: 'bold' }}>📞 +91 95049 61730</a>
-                    <a href="tel:+919931426338" style={{ textDecoration: 'none', color: 'inherit', fontWeight: 'bold' }}>📞 +91 99314 26338</a>
+                    <a href="tel:+916287347004" style={{ textDecoration: 'none', color: '#ffffff', fontWeight: 'bold' }}>📞 +91 62873 47004</a>
+                    <a href="tel:+919504961730" style={{ textDecoration: 'none', color: '#ffffff', fontWeight: 'bold' }}>📞 +91 95049 61730</a>
+                    <a href="tel:+919931426338" style={{ textDecoration: 'none', color: '#ffffff', fontWeight: 'bold' }}>📞 +91 99314 26338</a>
                   </div>
                   <h3>🕐 Class Timings</h3>
                   <div className="lp-timing-list">
