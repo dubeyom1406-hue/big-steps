@@ -15,7 +15,14 @@ const getBaseUrl = () => {
             return 'http://localhost:5000/api';
         }
     }
-    return import.meta.env.VITE_API_URL || 'https://big-steps.onrender.com/api';
+    let url = import.meta.env.VITE_API_URL || 'https://big-steps.onrender.com/api';
+    if (url) {
+        url = url.replace(/\/+$/, ''); // Remove trailing slashes
+        if (!url.endsWith('/api')) {
+            url = `${url}/api`;
+        }
+    }
+    return url;
 };
 
 const BASE_URL = getBaseUrl();

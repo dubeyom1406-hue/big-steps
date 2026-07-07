@@ -155,11 +155,8 @@ const Home = () => {
 
             {/* Desktop Links */}
             <div className="lp-nav-links">
-              <Link to="/login" className="lp-nav-btn lp-nav-btn-outline">
-                Student Portal
-              </Link>
-              <Link to="/admin-login" className="lp-nav-btn lp-nav-btn-primary">
-                ✦ Admin Login
+              <Link to="/login" className="lp-nav-btn lp-btn-attractive-gradient">
+                ✦ Student Login
               </Link>
             </div>
 
@@ -176,13 +173,9 @@ const Home = () => {
 
           {/* Mobile Menu */}
           <div className={`lp-mobile-menu ${isMenuOpen ? 'open' : ''}`}>
-            <Link to="/login" className="lp-nav-btn lp-nav-btn-outline" style={{ textAlign: 'center' }}
+            <Link to="/login" className="lp-nav-btn lp-btn-attractive-gradient" style={{ textAlign: 'center', justifyContent: 'center' }}
               onClick={() => setIsMenuOpen(false)}>
-              Student Portal
-            </Link>
-            <Link to="/admin-login" className="lp-nav-btn lp-nav-btn-primary" style={{ textAlign: 'center' }}
-              onClick={() => setIsMenuOpen(false)}>
-              ✦ Admin Login
+              ✦ Student Login
             </Link>
           </div>
         </nav>
@@ -545,7 +538,6 @@ const Home = () => {
                 <h4>Portal</h4>
                 <ul>
                   <li><Link to="/login">Student Login</Link></li>
-                  <li><Link to="/admin-login">Admin Login</Link></li>
                 </ul>
               </div>
 

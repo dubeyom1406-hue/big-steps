@@ -19,18 +19,27 @@ const AdminLogin = () => {
     
     try {
         const response = await apiFetch('/auth/admin-login', {
-            method: 'POST',
-            body: JSON.stringify({ username: username.trim(), password })
+          method: 'POST',
+          body: JSON.stringify({ username: username.trim(), password })
         });
 
-        const data = await response.json();
+        // Defensive: ensure the server returned JSON before calling .json()
+        const ct = response.headers.get('content-type') || '';
+        let data;
+        if (ct.includes('application/json')) {
+          data = await response.json();
+        } else {
+          // Non-JSON (likely HTML error page) — read text for diagnostics
+          const text = await response.text();
+          throw new Error(`Server returned non-JSON response (status ${response.status}): ${text.slice(0,200)}`);
+        }
 
         if (response.ok && data.success) {
-            localStorage.setItem('admin_token', data.token);
-            localStorage.setItem('admin_user', JSON.stringify(data.admin));
-            navigate('/admin-dashboard');
+          localStorage.setItem('admin_token', data.token);
+          localStorage.setItem('admin_user', JSON.stringify(data.admin));
+          navigate('/admin-dashboard');
         } else {
-            setErrorMsg(data.message || "Invalid credentials. Please contact administration if you forgot details.");
+          setErrorMsg(data.message || "Invalid credentials. Please contact administration if you forgot details.");
         }
     } catch (error) {
         console.error("Auth error:", error);

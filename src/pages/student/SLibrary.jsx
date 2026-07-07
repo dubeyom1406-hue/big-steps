@@ -137,7 +137,7 @@ const SLibrary = ({ studentData }) => {
                     </td>
                     <td>
                       <a
-                        href={`http://localhost:5000${m.fileUrl}`}
+                        href={`${BASE_URL.endsWith('/api') ? BASE_URL.slice(0, -4) : BASE_URL}${m.fileUrl}`}
                         target="_blank"
                         rel="noopener noreferrer"
                         style={{

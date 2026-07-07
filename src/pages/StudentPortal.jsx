@@ -100,12 +100,8 @@ const StudentPortal = () => {
       {/* ── TOP HORIZONTAL HEADER (TechEdu Style) ── */}
       <header className="sp-top-nav-bar">
         {/* Left: Brand Logo & Title */}
-        <div className="sp-brand-col">
-          <div className="sp-brand-logo-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-              <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
-            </svg>
-          </div>
+        <div className="sp-brand-col" onClick={() => setActiveSection('dashboard')}>
+          <img src={logoImg} alt="Bright Steps" className="sp-brand-logo-img" />
           <span className="sp-brand-name">BrightSteps</span>
         </div>
 
@@ -211,6 +207,58 @@ const StudentPortal = () => {
           {renderContent()}
         </div>
       </main>
+
+      {/* Mobile Sticky Bottom Navigation Bar */}
+      <div className="sp-bottom-nav-bar">
+        {NAV_ITEMS.map(item => {
+          let icon = null;
+          if (item.id === 'dashboard') {
+            icon = (
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/>
+              </svg>
+            );
+          } else if (item.id === 'batches') {
+            icon = (
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                <circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+              </svg>
+            );
+          } else if (item.id === 'my-batches') {
+            icon = (
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                <path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c0 2 2.5 3 6 3s6-1 6-3v-5"/>
+              </svg>
+            );
+          } else if (item.id === 'library') {
+            icon = (
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+              </svg>
+            );
+          } else if (item.id === 'test') {
+            icon = (
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="M9 12l2 2 4-4"/>
+              </svg>
+            );
+          }
+
+          return (
+            <button
+              type="button"
+              key={item.id}
+              className={`sp-bottom-nav-btn ${activeSection === item.id ? 'active' : ''}`}
+              onClick={() => setActiveSection(item.id)}
+            >
+              <div className="sp-bottom-nav-icon">{icon}</div>
+              <span className="sp-bottom-nav-lbl">
+                {item.id === 'batches' ? 'Explore' : item.id === 'test' ? 'Tests' : item.label}
+              </span>
+            </button>
+          );
+        })}
+      </div>
     </div>
   );
 };

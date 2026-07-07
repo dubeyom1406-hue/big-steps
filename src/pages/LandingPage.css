@@ -306,23 +306,49 @@
   align-items: center;
   gap: 10px;
   padding: 16px 34px;
-  background: var(--lp-primary);
+  background: linear-gradient(135deg, #3b82f6, #1d4ed8);
   color: #ffffff;
   border-radius: 50px;
   font-size: 0.97rem;
   font-weight: 700;
   border: none;
   cursor: pointer;
-  transition: var(--lp-transition);
-  box-shadow: 0 6px 24px rgba(0, 33, 71, 0.3);
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 6px 24px rgba(29, 78, 216, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.2);
   font-family: 'Outfit', sans-serif;
   text-decoration: none;
 }
 
 .lp-btn-hero-primary:hover {
   transform: translateY(-3px);
-  background: #003366;
-  box-shadow: 0 12px 36px rgba(0, 33, 71, 0.4);
+  background: linear-gradient(135deg, #4f46e5, #2563eb);
+  box-shadow: 0 12px 36px rgba(29, 78, 216, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+/* Premium Attractive Gradient button for Student Portal Login */
+.lp-btn-attractive-gradient {
+  background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+  color: #ffffff !important;
+  font-weight: 700;
+  border-radius: 50px;
+  box-shadow: 0 4px 15px rgba(29, 78, 216, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  font-family: 'Outfit', sans-serif;
+  cursor: pointer;
+}
+
+.lp-btn-attractive-gradient:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(29, 78, 216, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  background: linear-gradient(135deg, #4f46e5, #2563eb);
+}
+
+.lp-btn-attractive-gradient:active {
+  transform: translateY(0);
 }
 
 .lp-btn-hero-secondary {

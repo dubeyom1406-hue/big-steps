@@ -444,7 +444,9 @@ const AdminBatches = () => {
   // ── Render Immersive Batch Classroom Workspace View ──
   if (activeWorkspaceBatch) {
     // 1. Compile all distinct subjects
-    const batchSubjects = activeWorkspaceBatch.subjects || (activeWorkspaceBatch.subject ? [activeWorkspaceBatch.subject] : ['Science', 'Math', 'SST', 'English', 'Computer']);
+    const batchSubjects = (activeWorkspaceBatch.subjects && activeWorkspaceBatch.subjects.length > 0)
+      ? activeWorkspaceBatch.subjects
+      : (activeWorkspaceBatch.subject ? [activeWorkspaceBatch.subject] : ['Science', 'Math', 'SST', 'English', 'Computer']);
 
     const SUBJECT_ICONS = {
       science: '🔬',
@@ -465,7 +467,7 @@ const AdminBatches = () => {
           {toast && <div className="ab-toast">{toast}</div>}
           
           {/* Header Back */}
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: '#ffffff', padding: '16px 24px', borderRadius: '12px', border: '1px solid #e5e7eb', marginBottom: '24px' }}>
+          <div className="ab-workspace-header">
             <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
               <button
                 onClick={() => setActiveWorkspaceBatch(null)}
@@ -556,7 +558,7 @@ const AdminBatches = () => {
         {toast && <div className="ab-toast">{toast}</div>}
 
         {/* Header Back navigation */}
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: '#ffffff', padding: '16px 24px', borderRadius: '12px', border: '1px solid #e5e7eb', marginBottom: '24px' }}>
+        <div className="ab-workspace-header">
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
             <button
               onClick={() => setSelectedWorkspaceSubject(null)}
@@ -578,7 +580,7 @@ const AdminBatches = () => {
         </div>
 
         {/* Tab Selection */}
-        <div style={{ display: 'flex', gap: '8px', borderBottom: '2px solid #e5e7eb', paddingBottom: '12px', marginBottom: '24px' }}>
+        <div className="ab-workspace-tabs">
           {[
             { id: 'schedule', label: '📅 Class Schedule Slots' },
             { id: 'syllabus', label: '📖 Dynamic Syllabus & Lectures' },
@@ -643,7 +645,7 @@ const AdminBatches = () => {
               {/* Add Schedule row */}
               <div style={{ background: '#f9fafb', padding: '20px', borderRadius: '12px', border: '1px solid #e5e7eb' }}>
                 <h4 style={{ margin: '0 0 12px 0', fontSize: '14px', fontWeight: '700' }}>Schedule a Class Slot</h4>
-                <div style={{ display: 'grid', gridTemplateColumns: '1.2fr 1fr 1fr 1fr auto', gap: '12px', alignItems: 'flex-end' }}>
+                <div className="ab-schedule-grid" style={{ gap: '12px', alignItems: 'flex-end' }}>
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
                     <label style={{ fontSize: '12px', fontWeight: '600' }}>Subject</label>
                     <input type="text" value={selectedWorkspaceSubject} readOnly style={{ padding: '8px 12px', border: '1px solid #d1d5db', borderRadius: '6px', fontSize: '13px', background: '#f3f4f6', cursor: 'not-allowed', color: '#6b7280' }} />
@@ -672,7 +674,7 @@ const AdminBatches = () => {
             <div>
               <h2 style={{ fontSize: '16px', fontWeight: '800', color: '#1f2937', marginBottom: '16px' }}>Manage Course Chapters & Lectures ({selectedWorkspaceSubject})</h2>
               
-              <div style={{ display: 'grid', gridTemplateColumns: '280px 1fr', gap: '24px', alignItems: 'start' }}>
+              <div className="ab-syllabus-grid" style={{ gap: '24px', alignItems: 'start' }}>
                 
                 {/* Left Column: Chapters Sidebar */}
                 <div style={{ background: '#f9fafb', border: '1px solid #e5e7eb', borderRadius: '12px', padding: '16px' }}>
@@ -699,12 +701,13 @@ const AdminBatches = () => {
                   ) : chapters.length === 0 ? (
                     <p style={{ fontSize: '12px', color: '#6b7280' }}>No chapters created yet.</p>
                   ) : (
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                    <div className="ab-chapters-list-wrap" style={{ gap: '6px' }}>
                       {chapters.map(c => {
                         const isSelected = selectedChapterId === c.id;
                         return (
                           <div
                             key={c.id}
+                            className="ab-chapter-item"
                             onClick={() => setSelectedChapterId(c.id)}
                             style={{
                               display: 'flex',
@@ -743,7 +746,7 @@ const AdminBatches = () => {
                       <div style={{ background: '#f9fafb', border: '1px solid #e5e7eb', borderRadius: '12px', padding: '20px', marginBottom: '24px' }}>
                         <h4 style={{ margin: '0 0 14px 0', fontSize: '14px', fontWeight: '800', color: '#1f2937' }}>Add Lecture / Topic to Selected Chapter</h4>
                         
-                        <form onSubmit={handleAddLecture} style={{ display: 'grid', gridTemplateColumns: '2fr 1fr 1fr 2fr auto', gap: '12px', alignItems: 'flex-end' }}>
+                        <form onSubmit={handleAddLecture} className="ab-lecture-grid" style={{ gap: '12px', alignItems: 'flex-end' }}>
                           <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
                             <label style={{ fontSize: '11px', fontWeight: '700', color: '#475569' }}>Lecture Title</label>
                             <input
@@ -858,7 +861,7 @@ const AdminBatches = () => {
               {/* Upload form block */}
               <form onSubmit={handleUploadWorkspaceNote} style={{ background: '#f9fafb', padding: '20px', borderRadius: '12px', border: '1px solid #e5e7eb', marginBottom: '24px', display: 'flex', flexDirection: 'column', gap: '14px' }}>
                 <h4 style={{ margin: 0, fontSize: '14px', fontWeight: '700' }}>Upload New PDF Worksheet / Notes</h4>
-                <div style={{ display: 'grid', gridTemplateColumns: '1.5fr 1fr 1fr auto', gap: '12px', alignItems: 'flex-end' }}>
+                <div className="ab-note-grid" style={{ gap: '12px', alignItems: 'flex-end' }}>
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
                     <label style={{ fontSize: '12px', fontWeight: '600' }}>Title</label>
                     <input type="text" placeholder="e.g. Vector DPP 01" value={newNoteForm.title} onChange={e => setNewNoteForm({...newNoteForm, title: e.target.value})} style={{ padding: '8px 12px', border: '1px solid #d1d5db', borderRadius: '6px', fontSize: '13px' }} required />
@@ -883,35 +886,37 @@ const AdminBatches = () => {
               ) : filteredNotes.length === 0 ? (
                 <p style={{ fontSize: '13px', color: '#6b7280' }}>No worksheets uploaded yet for this subject.</p>
               ) : (
-                <table className="ab-table">
-                  <thead>
-                    <tr>
-                      <th>Title</th>
-                      <th>Subject</th>
-                      <th>Format</th>
-                      <th>Created At</th>
-                      <th>Action</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {filteredNotes.map(note => (
-                      <tr key={note.id}>
-                        <td><strong>{note.title}</strong></td>
-                        <td><span className="ab-tag">{note.subject}</span></td>
-                        <td style={{ fontSize: '12px' }}>{note.originalName?.split('.').pop().toUpperCase() || 'PDF'}</td>
-                        <td style={{ fontSize: '12px' }}>{new Date(note.createdAt).toLocaleDateString()}</td>
-                        <td>
-                          <button
-                            onClick={() => handleDeleteWorkspaceNote(note.id)}
-                            style={{ background: '#fee2e2', color: '#dc2626', border: 'none', padding: '4px 10px', borderRadius: '4px', cursor: 'pointer', fontSize: '12px' }}
-                          >
-                            Delete
-                          </button>
-                        </td>
+                <div className="ab-batch-table-wrap">
+                  <table className="ab-table">
+                    <thead>
+                      <tr>
+                        <th>Title</th>
+                        <th>Subject</th>
+                        <th>Format</th>
+                        <th>Created At</th>
+                        <th>Action</th>
                       </tr>
-                    ))}
-                  </tbody>
-                </table>
+                    </thead>
+                    <tbody>
+                      {filteredNotes.map(note => (
+                        <tr key={note.id}>
+                          <td><strong>{note.title}</strong></td>
+                          <td><span className="ab-tag">{note.subject}</span></td>
+                          <td style={{ fontSize: '12px' }}>{note.originalName?.split('.').pop().toUpperCase() || 'PDF'}</td>
+                          <td style={{ fontSize: '12px' }}>{new Date(note.createdAt).toLocaleDateString()}</td>
+                          <td>
+                            <button
+                              onClick={() => handleDeleteWorkspaceNote(note.id)}
+                              style={{ background: '#fee2e2', color: '#dc2626', border: 'none', padding: '4px 10px', borderRadius: '4px', cursor: 'pointer', fontSize: '12px' }}
+                            >
+                              Delete
+                            </button>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
               )}
             </div>
           )}
@@ -925,28 +930,30 @@ const AdminBatches = () => {
               ) : enrolledStudents.length === 0 ? (
                 <p style={{ fontSize: '13px', color: '#6b7280' }}>No students enrolled in this batch yet.</p>
               ) : (
-                <table className="ab-table">
-                  <thead>
-                    <tr>
-                      <th>Student Name</th>
-                      <th>Login ID</th>
-                      <th>Email</th>
-                      <th>Class Grade</th>
-                      <th>Registration Date</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {enrolledStudents.map(student => (
-                      <tr key={student.id}>
-                        <td><strong>{student.studentName}</strong></td>
-                        <td>{student.loginId}</td>
-                        <td>{student.email || '—'}</td>
-                        <td>Grade {student.classGrade}</td>
-                        <td>{student.registrationDate || new Date(student.createdAt).toLocaleDateString()}</td>
+                <div className="ab-batch-table-wrap">
+                  <table className="ab-table">
+                    <thead>
+                      <tr>
+                        <th>Student Name</th>
+                        <th>Login ID</th>
+                        <th>Email</th>
+                        <th>Class Grade</th>
+                        <th>Registration Date</th>
                       </tr>
-                    ))}
-                  </tbody>
-                </table>
+                    </thead>
+                    <tbody>
+                      {enrolledStudents.map(student => (
+                        <tr key={student.id}>
+                          <td><strong>{student.studentName}</strong></td>
+                          <td>{student.loginId}</td>
+                          <td>{student.email || '—'}</td>
+                          <td>Grade {student.classGrade}</td>
+                          <td>{student.registrationDate || new Date(student.createdAt).toLocaleDateString()}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
               )}
             </div>
           )}

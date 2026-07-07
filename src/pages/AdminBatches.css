@@ -137,7 +137,122 @@
 .ab-confirm-del { background: #dc2626; color: #fff; border: none; padding: 6px 12px; border-radius: 6px; font-size: 13px; font-weight: 600; cursor: pointer; }
 .ab-cancel-del { background: #f3f4f6; color: #4b5563; border: none; padding: 6px 12px; border-radius: 6px; font-size: 13px; font-weight: 600; cursor: pointer; }
 
-@media (max-width: 768px) {
+/* ── Workspace Headers ── */
+.ab-workspace-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #ffffff;
+  padding: 16px 24px;
+  border-radius: 12px;
+  border: 1px solid #e5e7eb;
+  margin-bottom: 24px;
+}
+
+/* ── Workspace Tabs ── */
+.ab-workspace-tabs {
+  display: flex;
+  gap: 8px;
+  border-bottom: 2px solid #e5e7eb;
+  padding-bottom: 12px;
+  margin-bottom: 24px;
+  overflow-x: auto;
+  flex-wrap: nowrap;
+  -webkit-overflow-scrolling: touch;
+}
+
+.ab-workspace-tabs button {
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+/* ── Grids ── */
+.ab-schedule-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr 1fr 1fr auto;
+}
+
+.ab-syllabus-grid {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 24px;
+}
+
+.ab-chapters-list-wrap {
+  display: flex;
+  flex-direction: column;
+}
+
+.ab-lecture-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 2fr auto;
+}
+
+.ab-note-grid {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr 1fr auto;
+}
+
+.ab-subject-teacher-row {
+  display: grid;
+  grid-template-columns: 1fr 2fr 3fr;
+  gap: 16px;
+  align-items: center;
+  background: #f8fafc;
+  padding: 14px 18px;
+  border-radius: 10px;
+  border: 1px solid #e2e8f0;
+}
+
+/* ── Responsive adjustments ── */
+@media (max-width: 992px) {
   .ab-root { padding: 16px; }
-  .ab-add-class-row { grid-template-columns: 1fr; }
+  .ab-header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+  .ab-create-btn {
+    justify-content: center;
+  }
+  .ab-workspace-header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+    text-align: center;
+  }
+  .ab-workspace-header button {
+    justify-content: center;
+  }
+  .ab-syllabus-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  .ab-chapters-list-wrap {
+    flex-direction: row;
+    overflow-x: auto;
+    padding-bottom: 8px;
+    gap: 10px;
+    -webkit-overflow-scrolling: touch;
+  }
+  .ab-chapter-item {
+    flex-shrink: 0;
+    white-space: nowrap;
+    max-width: none !important;
+  }
+  .ab-schedule-grid, .ab-note-grid, .ab-lecture-grid {
+    grid-template-columns: 1fr;
+    align-items: stretch;
+    gap: 12px;
+  }
+  .ab-schedule-grid button, .ab-note-grid button, .ab-lecture-grid button {
+    margin-top: 8px;
+    width: 100%;
+    justify-content: center;
+  }
+  .ab-subject-teacher-row {
+    grid-template-columns: 1fr;
+    gap: 10px;
+    align-items: stretch;
+  }
 }

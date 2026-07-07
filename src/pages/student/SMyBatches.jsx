@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { apiFetch } from '../../api';
+import BASE_URL from '../../api';
 import '../StudentPortal.css';
 
 const BATCH_EMOJIS = ['🚀', '📚', '🎯', '⚡', '🔬', '💡', '🏆', '🌟'];
@@ -220,7 +221,9 @@ const SMyBatches = ({ studentData, setActiveSection }) => {
   if (activeWorkspaceBatch) {
     // 1. If no subject selected yet, show Subjects Selection Hub
     if (!selectedSubject) {
-      const batchSubjects = activeWorkspaceBatch.subjects || (activeWorkspaceBatch.subject ? [activeWorkspaceBatch.subject] : ['Science', 'Math', 'SST', 'English', 'Computer']);
+      const batchSubjects = (activeWorkspaceBatch.subjects && activeWorkspaceBatch.subjects.length > 0)
+        ? activeWorkspaceBatch.subjects
+        : (activeWorkspaceBatch.subject ? [activeWorkspaceBatch.subject] : ['Science', 'Math', 'SST', 'English', 'Computer']);
 
       const SUBJECT_ICONS = {
         science: '🔬',
@@ -330,35 +333,11 @@ const SMyBatches = ({ studentData, setActiveSection }) => {
     }
 
     // 2. Classroom view with dynamic subject-specific generated contents
-    const activeChapters = chapters.length > 0 ? chapters : CHAPTERS;
+    const activeChapters = chapters;
 
-    const getSubjectLectures = () => {
-      const base = LECTURES_DATA[selectedChapterId] || [];
-      return base.map(l => ({
-        ...l,
-        title: l.title.replace('Vectors', selectedSubject).replace('Kinematics', selectedSubject).replace('Newton\'s', selectedSubject)
-      }));
-    };
-
-    const getSubjectNotes = () => {
-      const base = NOTES_DATA[selectedChapterId] || [];
-      return base.map(n => ({
-        ...n,
-        name: n.name.replace('Vectors', selectedSubject).replace('Kinematics', selectedSubject)
-      }));
-    };
-
-    const getSubjectQuizzes = () => {
-      const base = QUIZZES_DATA[selectedChapterId] || [];
-      return base.map(q => ({
-        ...q,
-        title: q.title.replace('Vector', selectedSubject).replace('Kinematics', selectedSubject)
-      }));
-    };
-
-    const activeLectures = chapters.length > 0 ? lectures : getSubjectLectures();
-    const activeNotes = getSubjectNotes();
-    const activeQuizzes = getSubjectQuizzes();
+    const activeLectures = lectures;
+    const activeNotes = [];
+    const activeQuizzes = [];
 
     // Filter database uploaded notes specifically for the active subject
     const filteredWorkspaceNotes = workspaceNotes.filter(note => 
@@ -433,16 +412,22 @@ const SMyBatches = ({ studentData, setActiveSection }) => {
           <div className="te-workspace-chapters-sidebar">
             <h4>Course Syllabus Chapters</h4>
             <div className="te-workspace-chapters-list">
-              {activeChapters.map(ch => (
-                <button
-                  type="button"
-                  key={ch.id}
-                  className={`te-chapter-nav-btn ${selectedChapterId === ch.id ? 'active' : ''}`}
-                  onClick={() => setSelectedChapterId(ch.id)}
-                >
-                  {ch.title}
-                </button>
-              ))}
+              {activeChapters.length === 0 ? (
+                <div style={{ textAlign: 'center', padding: '24px 12px', color: '#64748b', fontSize: '13px' }}>
+                  📂 No chapters uploaded yet.
+                </div>
+              ) : (
+                activeChapters.map(ch => (
+                  <button
+                    type="button"
+                    key={ch.id}
+                    className={`te-chapter-nav-btn ${selectedChapterId === ch.id ? 'active' : ''}`}
+                    onClick={() => setSelectedChapterId(ch.id)}
+                  >
+                    {ch.title}
+                  </button>
+                ))
+              )}
             </div>
           </div>
 
@@ -547,7 +532,7 @@ const SMyBatches = ({ studentData, setActiveSection }) => {
                           <span style={{ fontSize: '12px', color: '#64748b' }}>Format: <strong>{note.originalName?.split('.').pop().toUpperCase() || 'PDF'}</strong> &bull; Subject: <strong>{note.subject}</strong></span>
                         </div>
                         <a
-                          href={`http://localhost:5000${note.fileUrl}`}
+                          href={`${BASE_URL.endsWith('/api') ? BASE_URL.slice(0, -4) : BASE_URL}${note.fileUrl}`}
                           target="_blank"
                           rel="noopener noreferrer"
                           style={{ textDecoration: 'none', background: '#3b82f6', color: '#fff', padding: '8px 16px', borderRadius: '8px', fontSize: '12px', fontWeight: '700', cursor: 'pointer', fontFamily: 'inherit', textAlign: 'center' }}
