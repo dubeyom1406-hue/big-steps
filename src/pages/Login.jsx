@@ -22,6 +22,13 @@ const Login = () => {
   const [successMsg, setSuccessMsg] = useState('')
   const navigate = useNavigate()
 
+  useEffect(() => {
+    const queryParams = new URLSearchParams(window.location.search);
+    if (queryParams.get('expired') === 'true') {
+      setErrorMsg("Your session has expired. Please log in again to continue.");
+    }
+  }, []);
+
   // Countdown timer for OTP resend
   useEffect(() => {
     let interval = null;

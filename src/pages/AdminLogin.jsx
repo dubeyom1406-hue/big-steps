@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import logoImg from '../assets/logo.png'
 import './AdminLogin.css'
@@ -11,6 +11,13 @@ const AdminLogin = () => {
   const [isLoggingIn, setIsLoggingIn] = useState(false)
   const [errorMsg, setErrorMsg] = useState('')
   const navigate = useNavigate()
+
+  useEffect(() => {
+    const queryParams = new URLSearchParams(window.location.search);
+    if (queryParams.get('expired') === 'true') {
+      setErrorMsg("Your session has expired. Please log in again to continue.");
+    }
+  }, []);
 
   const handleLogin = async (e) => {
     e.preventDefault();

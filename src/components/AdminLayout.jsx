@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import logoImg from '../assets/logo.png';
 import '../pages/AdminDashboard.css';
+import { isTokenExpired } from '../api';
 
 const AdminLayout = () => {
   const [isSidebarExpanded, setIsSidebarExpanded] = useState(false);
@@ -13,6 +14,10 @@ const AdminLayout = () => {
     const adminToken = localStorage.getItem('admin_token');
     if (!adminToken) {
       navigate('/admin-login');
+    } else if (isTokenExpired(adminToken)) {
+      localStorage.removeItem('admin_token');
+      localStorage.removeItem('admin_user');
+      navigate('/admin-login?expired=true');
     }
   }, [navigate]);
 

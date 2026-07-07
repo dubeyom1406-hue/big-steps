@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import logoImg from '../assets/logo.png';
 import './StudentPortal.css';
-import { apiFetch } from '../api';
+import { apiFetch, isTokenExpired } from '../api';
 import SDashboard from './student/SDashboard';
 import SBatches from './student/SBatches';
 import SMyBatches from './student/SMyBatches';
@@ -33,7 +33,19 @@ const StudentPortal = () => {
 
   useEffect(() => {
     const data = localStorage.getItem('student_data');
-    if (!data) { navigate('/login'); return; }
+    const token = localStorage.getItem('user_token');
+    if (!data || !token) { 
+      localStorage.removeItem('user_token');
+      localStorage.removeItem('student_data');
+      navigate('/login'); 
+      return; 
+    }
+    if (isTokenExpired(token)) {
+      localStorage.removeItem('user_token');
+      localStorage.removeItem('student_data');
+      navigate('/login?expired=true');
+      return;
+    }
     const initialData = JSON.parse(data);
     setStudentData(initialData);
 

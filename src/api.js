@@ -12,6 +12,10 @@ const getBaseUrl = () => {
             hostname.startsWith('10.') || 
             hostname.startsWith('172.')
         ) {
+            // Use local subnet IP if connecting from another device (like mobile phone)
+            if (hostname !== 'localhost' && hostname !== '127.0.0.1') {
+                return `http://${hostname}:5000/api`;
+            }
             return 'http://localhost:5000/api';
         }
     }
@@ -26,6 +30,27 @@ const getBaseUrl = () => {
 };
 
 const BASE_URL = getBaseUrl();
+
+export const isTokenExpired = (token) => {
+    if (!token) return true;
+    try {
+        const base64Url = token.split('.')[1];
+        const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+        const jsonPayload = decodeURIComponent(
+            window.atob(base64)
+                .split('')
+                .map((c) => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2))
+                .join('')
+        );
+        const { exp } = JSON.parse(jsonPayload);
+        if (exp && Date.now() >= exp * 1000) {
+            return true;
+        }
+        return false;
+    } catch {
+        return true; // If parsing fails, treat it as expired/invalid
+    }
+};
 
 export const apiFetch = async (endpoint, options = {}) => {
     const adminToken = localStorage.getItem('admin_token');
@@ -53,7 +78,22 @@ export const apiFetch = async (endpoint, options = {}) => {
         });
 
         if (response.status === 401 || response.status === 403) {
-            // Optional: handle session expiry logic here
+            if (typeof window !== 'undefined') {
+                const isAdminPath = window.location.pathname.startsWith('/admin') || 
+                                    window.location.pathname.startsWith('/admission') || 
+                                    window.location.pathname.startsWith('/all-students') || 
+                                    window.location.pathname.startsWith('/batches') || 
+                                    window.location.pathname.startsWith('/analytics');
+                if (isAdminPath) {
+                    localStorage.removeItem('admin_token');
+                    localStorage.removeItem('admin_user');
+                    window.location.href = '/admin-login?expired=true';
+                } else {
+                    localStorage.removeItem('user_token');
+                    localStorage.removeItem('student_data');
+                    window.location.href = '/login?expired=true';
+                }
+            }
         }
 
         return response;
