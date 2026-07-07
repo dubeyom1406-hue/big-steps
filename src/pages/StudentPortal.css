@@ -1313,7 +1313,13 @@ body {
 }
 
 /* Batch selector chips in the unified stats card */
-.te-unified-stats-card { padding: 18px; display: flex; align-items: center; gap: 16px; }
+.te-unified-stats-card {
+  padding: 18px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+  gap: 16px;
+}
 .te-unified-stats-card select { padding: 8px 12px; border-radius: 8px; border: 1px solid var(--sp-border); font-weight: 700; background: #fff; }
 .batch-chip {
   display: inline-flex;
@@ -1519,9 +1525,148 @@ body {
   }
 }
 
+@media (max-width: 992px) {
+  /* Fix double definition overriding grid stats card on mobile */
+  .te-unified-stats-card {
+    display: flex !important;
+    flex-direction: column;
+    padding: 16px;
+    gap: 16px;
+  }
+}
+
+/* Horizontal scrollable tab container for workspace selection */
+.te-workspace-tabs-scroll {
+  overflow-x: auto;
+  display: flex;
+  gap: 8px;
+  padding-bottom: 8px;
+  -webkit-overflow-scrolling: touch;
+}
+.te-workspace-tabs-scroll::-webkit-scrollbar {
+  display: none; /* Hide scrollbar for cleaner look */
+}
+
+/* Table Card Layout transformation on Mobile Screens */
+@media (max-width: 768px) {
+  .te-table-wrap {
+    overflow-x: visible;
+    padding: 0;
+  }
+  .te-table, 
+  .te-table thead, 
+  .te-table tbody, 
+  .te-table th, 
+  .te-table td, 
+  .te-table tr {
+    display: block;
+    width: 100%;
+  }
+  .te-table thead {
+    display: none; /* Hide header row */
+  }
+  .te-table tbody {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .te-table tr {
+    background: #ffffff;
+    border: 1px solid var(--sp-border);
+    border-radius: var(--sp-radius);
+    padding: 16px;
+    box-shadow: var(--sp-shadow-sm);
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .te-table td {
+    padding: 8px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px dashed #f1f5f9;
+    text-align: right;
+    box-sizing: border-box;
+    font-size: 13px;
+    min-height: 38px;
+  }
+  .te-table td:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+    margin-top: 8px;
+  }
+  .te-table td:first-child {
+    padding-top: 0;
+    border-bottom: 1.5px solid var(--sp-border);
+    padding-bottom: 12px;
+    margin-bottom: 8px;
+    justify-content: flex-start;
+    text-align: left;
+  }
+  .te-table td::before {
+    content: attr(data-label);
+    font-weight: 700;
+    color: var(--sp-muted);
+    font-size: 11px;
+    text-transform: uppercase;
+    text-align: left;
+    margin-right: 8px;
+  }
+  .te-table td:first-child::before {
+    display: none; /* Hide label for the main title cell */
+  }
+  
+  /* Sliding Drawer Mobile Adjustments */
+  .sp-drawer {
+    width: 100% !important;
+  }
+  .sp-drawer-body {
+    padding: 16px;
+    gap: 16px;
+  }
+  .sp-drawer-header {
+    padding: 16px;
+  }
+}
+
+/* Mobile responsive fixes for Workspace header toolbar */
+@media (max-width: 768px) {
+  .te-workspace-header-toolbar {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 16px !important;
+    padding: 16px !important;
+  }
+  .te-workspace-header-toolbar > div {
+    width: 100%;
+  }
+  .te-workspace-header-toolbar button {
+    width: 100%;
+    text-align: center;
+  }
+}
+
 @media (max-width: 480px) {
   .sp-brand-name {
     display: none; /* Hide brand name text to save space on tiny screens */
+  }
+}
+
+/* Horizontal scrolling week day picker on mobile */
+@media (max-width: 600px) {
+  .sd-week-slider {
+    display: flex !important;
+    overflow-x: auto !important;
+    gap: 8px !important;
+    padding-bottom: 6px !important;
+    -webkit-overflow-scrolling: touch !important;
+  }
+  .sd-week-day-card {
+    flex: 0 0 54px !important;
+    min-width: 54px !important;
+    padding: 8px 4px !important;
   }
 }
 

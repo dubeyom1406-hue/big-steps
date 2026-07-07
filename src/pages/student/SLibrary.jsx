@@ -116,7 +116,7 @@ const SLibrary = ({ studentData }) => {
               <tbody>
                 {filtered.map(m => (
                   <tr key={m.id}>
-                    <td>
+                    <td data-label="Document">
                       <div className="te-student-cell">
                         <div className="te-student-pic" style={{ background: '#eff6ff', color: '#3b82f6', fontSize: '18px' }}>
                           {getFileIcon(m.originalName || m.fileUrl)}
@@ -126,18 +126,18 @@ const SLibrary = ({ studentData }) => {
                         </div>
                       </div>
                     </td>
-                    <td>
+                    <td data-label="Subject">
                       <span className="batch-card-badge" style={{ background: '#eff6ff', color: '#3b82f6', fontWeight: '700' }}>
                         {m.subject}
                       </span>
                     </td>
-                    <td style={{ fontSize: '13px', fontWeight: '600', color: '#475569' }}>
+                    <td data-label="Grade" style={{ fontSize: '13px', fontWeight: '600', color: '#475569' }}>
                       Class {Array.isArray(m.classes) ? m.classes.join(', ') : m.classes}
                     </td>
-                    <td style={{ fontSize: '12px', fontWeight: '700', color: '#64748b' }}>
+                    <td data-label="Format" style={{ fontSize: '12px', fontWeight: '700', color: '#64748b' }}>
                       {getFileLabel(m.originalName || m.fileUrl)}
                     </td>
-                    <td>
+                    <td data-label="Action">
                       <a
                         href={m.fileUrl?.startsWith('http') ? m.fileUrl : `${BASE_URL.endsWith('/api') ? BASE_URL.slice(0, -4) : BASE_URL}${m.fileUrl}`}
                         target="_blank"

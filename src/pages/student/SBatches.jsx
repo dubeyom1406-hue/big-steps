@@ -115,7 +115,7 @@ const SBatches = ({ studentData, updateStudentData, setActiveSection }) => {
         </div>
 
         {/* Filters */}
-        <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+        <div style={{ display: 'flex', gap: '10px', alignItems: 'center', flexWrap: 'wrap' }}>
           <span style={{ fontSize: '12px', fontWeight: '750', color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.2px' }}>Language:</span>
           {['All', 'Hinglish', 'Hindi', 'English'].map(lang => (
             <button
@@ -246,7 +246,7 @@ const SBatches = ({ studentData, updateStudentData, setActiveSection }) => {
               </div>
 
               {/* Price Details */}
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: '#f8fafc', padding: '16px', borderRadius: '12px', border: '1px solid #e2e8f0' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '12px', background: '#f8fafc', padding: '16px', borderRadius: '12px', border: '1px solid #e2e8f0' }}>
                 <div style={{ display: 'flex', flexDirection: 'column' }}>
                   <span style={{ fontSize: '11px', fontWeight: '700', color: '#64748b', textTransform: 'uppercase' }}>Batch Fee</span>
                   <div style={{ display: 'flex', alignItems: 'baseline', gap: '6px', marginTop: '2px' }}>
@@ -383,10 +383,10 @@ const SBatches = ({ studentData, updateStudentData, setActiveSection }) => {
             </div>
 
             {/* Bottom actions */}
-            <div style={{ padding: '20px 24px', borderTop: '1px solid #e2e8f0', display: 'flex', gap: '12px' }}>
+            <div style={{ padding: '20px 24px', borderTop: '1px solid #e2e8f0', display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
               <button
                 type="button"
-                style={{ flex: 1, padding: '12px', background: '#f1f5f9', border: 'none', borderRadius: '10px', fontWeight: 700, color: '#475569', cursor: 'pointer', fontFamily: 'inherit' }}
+                style={{ flex: '1 1 120px', padding: '12px', background: '#f1f5f9', border: 'none', borderRadius: '10px', fontWeight: 700, color: '#475569', cursor: 'pointer', fontFamily: 'inherit' }}
                 onClick={() => setDrawerBatch(null)}
               >
                 Close Details
@@ -394,7 +394,7 @@ const SBatches = ({ studentData, updateStudentData, setActiveSection }) => {
               {enrolled.includes(drawerBatch.id) ? (
                 <button
                   type="button"
-                  style={{ flex: 1.5, padding: '12px', background: 'linear-gradient(135deg, #10b981, #059669)', border: 'none', borderRadius: '10px', fontWeight: 700, color: '#ffffff', cursor: 'pointer', fontFamily: 'inherit' }}
+                  style={{ flex: '1.5 1 150px', padding: '12px', background: 'linear-gradient(135deg, #10b981, #059669)', border: 'none', borderRadius: '10px', fontWeight: 700, color: '#ffffff', cursor: 'pointer', fontFamily: 'inherit' }}
                   onClick={() => { setDrawerBatch(null); setActiveSection('my-batches'); }}
                 >
                   Enter Classroom
@@ -402,7 +402,7 @@ const SBatches = ({ studentData, updateStudentData, setActiveSection }) => {
               ) : (
                 <button
                   type="button"
-                  style={{ flex: 1.5, padding: '12px', background: '#3b82f6', border: 'none', borderRadius: '10px', fontWeight: 700, color: '#ffffff', cursor: 'pointer', fontFamily: 'inherit' }}
+                  style={{ flex: '1.5 1 150px', padding: '12px', background: '#3b82f6', border: 'none', borderRadius: '10px', fontWeight: 700, color: '#ffffff', cursor: 'pointer', fontFamily: 'inherit' }}
                   onClick={() => handleEnroll(drawerBatch.id)}
                   disabled={enrolling === drawerBatch.id}
                 >

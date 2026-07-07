@@ -47,7 +47,7 @@ const STest = ({ studentData }) => {
                 <tbody>
                   {mockTests.map((row, i) => (
                     <tr key={i}>
-                      <td>
+                      <td data-label="Test">
                         <div className="te-student-cell">
                           <div className="te-student-pic" style={{ background: '#eff6ff', color: '#3b82f6', fontSize: '18px' }}>
                             ✍️
@@ -57,19 +57,19 @@ const STest = ({ studentData }) => {
                           </div>
                         </div>
                       </td>
-                      <td style={{ fontSize: '13px', fontWeight: 600, color: '#475569' }}>
+                      <td data-label="Duration" style={{ fontSize: '13px', fontWeight: 600, color: '#475569' }}>
                         {row.duration}
                       </td>
-                      <td style={{ fontSize: '13px', fontWeight: 650, color: '#0f172a' }}>
+                      <td data-label="Marks" style={{ fontSize: '13px', fontWeight: 650, color: '#0f172a' }}>
                         {row.marks}
                       </td>
-                      <td>
+                      <td data-label="Status">
                         <span className={`te-status-badge ${row.dotClass}`}>
                           <span className="te-status-dot" />
                           {row.status}
                         </span>
                       </td>
-                      <td>
+                      <td data-label="Action">
                         <button
                           type="button"
                           onClick={() => alert(`Attempting ${row.title}...`)}

@@ -241,7 +241,7 @@ const SMyBatches = ({ studentData, setActiveSection }) => {
       return (
         <div className="sp-page" style={{ animation: 'spPageFadeIn 0.3s var(--sp-ease)' }}>
           {/* Header Toolbar */}
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: '#ffffff', padding: '16px 28px', borderRadius: '16px', border: '1px solid #e2e8f0', marginBottom: '28px', boxShadow: 'var(--sp-shadow-sm)' }}>
+          <div className="te-workspace-header-toolbar" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: '#ffffff', padding: '16px 28px', borderRadius: '16px', border: '1px solid #e2e8f0', marginBottom: '28px', boxShadow: 'var(--sp-shadow-sm)' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
               <button
                 type="button"
@@ -352,7 +352,7 @@ const SMyBatches = ({ studentData, setActiveSection }) => {
     return (
       <div className="sp-page" style={{ animation: 'spPageFadeIn 0.3s var(--sp-ease)' }}>
         {/* Workspace Toolbar Header */}
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: '#ffffff', padding: '16px 28px', borderRadius: '16px', border: '1px solid #e2e8f0', marginBottom: '24px', boxShadow: 'var(--sp-shadow-sm)' }}>
+        <div className="te-workspace-header-toolbar" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: '#ffffff', padding: '16px 28px', borderRadius: '16px', border: '1px solid #e2e8f0', marginBottom: '24px', boxShadow: 'var(--sp-shadow-sm)' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
             <button
               type="button"
@@ -376,7 +376,7 @@ const SMyBatches = ({ studentData, setActiveSection }) => {
         </div>
 
         {/* Tab Selection */}
-        <div style={{ display: 'flex', gap: '8px', borderBottom: '1.5px solid #e2e8f0', paddingBottom: '12px', marginBottom: '24px' }}>
+        <div className="te-workspace-tabs-scroll" style={{ display: 'flex', gap: '8px', borderBottom: '1.5px solid #e2e8f0', paddingBottom: '12px', marginBottom: '24px' }}>
           {[
             { id: 'classes', label: '🎥 Lectures & Classes' },
             { id: 'notes', label: '📄 Worksheets & Notes' },
@@ -397,7 +397,9 @@ const SMyBatches = ({ studentData, setActiveSection }) => {
                 fontWeight: '750',
                 cursor: 'pointer',
                 transition: 'all 0.2s',
-                fontFamily: 'inherit'
+                fontFamily: 'inherit',
+                flexShrink: 0,
+                whiteSpace: 'nowrap'
               }}
             >
               {tab.label}

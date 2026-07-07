@@ -159,8 +159,8 @@ const SDashboard = ({ studentData, setActiveSection }) => {
 
       {/* ── 2. Unified Statistics banner ── */}
       <div className="te-unified-stats-card">
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', flex: 1 }}>
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', flex: '1 1 280px', minWidth: '280px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '8px' }}>
             <span className="te-stat-lbl">My Batches</span>
             <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
               <select
@@ -188,7 +188,7 @@ const SDashboard = ({ studentData, setActiveSection }) => {
           </div>
         </div>
 
-        <div style={{ flexBasis: '100%' }}>
+        <div style={{ flex: '1 1 280px', minWidth: '280px' }}>
           <div className="selected-batch-banner">
             {selectedBatch ? selectedBatch.name : 'No batch selected'}
           </div>
