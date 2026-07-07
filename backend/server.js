@@ -74,15 +74,29 @@ async function sendOTPEmail(toEmail, otp) {
             console.log(`📤 Attempting to send OTP via Google Apps Script Webhook...`);
             const response = await fetch(process.env.EMAIL_SCRIPT_URL, {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ to: toEmail, subject, html })
+                headers: { 'Content-Type': 'text/plain' },
+                body: JSON.stringify({ to: toEmail, subject, html }),
+                redirect: 'follow'
             });
-            const result = await response.json();
-            if (result && (result.success || result.status === 'success')) {
-                console.log(`✅ OTP email sent successfully via Google Apps Script to ${toEmail}`);
-                return true;
-            } else {
-                console.error("❌ Google Apps Script returned unsuccessful result:", result);
+            const responseText = await response.text();
+            console.log(`📬 Apps Script response (status ${response.status}):`, responseText.substring(0, 300));
+            
+            // Try to parse as JSON
+            try {
+                const result = JSON.parse(responseText);
+                if (result && (result.success || result.status === 'success')) {
+                    console.log(`✅ OTP email sent successfully via Google Apps Script to ${toEmail}`);
+                    return true;
+                } else {
+                    console.error("❌ Google Apps Script returned unsuccessful result:", result);
+                }
+            } catch (parseErr) {
+                // Response is HTML — check if it contains success indicators
+                if (responseText.includes('Email sent') || responseText.includes('"success":true')) {
+                    console.log(`✅ OTP email sent (parsed from HTML response) to ${toEmail}`);
+                    return true;
+                }
+                console.error("❌ Google Apps Script returned non-JSON response:", responseText.substring(0, 500));
             }
         } catch (scriptErr) {
             console.error("❌ Failed to send OTP via Google Apps Script Webhook:", scriptErr.message);
