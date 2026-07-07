@@ -598,12 +598,21 @@ app.post('/api/materials', authenticateAdmin, upload.single('file'), async (req,
             return res.status(400).json({ message: "No file uploaded or link provided" });
         }
 
-        // classes comes as a stringified JSON array from FormData
+        // classes can be a stringified JSON array, a real array, or a single string
         let parsedClasses = [];
-        try {
-            parsedClasses = JSON.parse(classes);
-        } catch(e) {
-            parsedClasses = classes ? [classes] : [];
+        if (classes) {
+            if (Array.isArray(classes)) {
+                parsedClasses = classes;
+            } else {
+                try {
+                    parsedClasses = JSON.parse(classes);
+                    if (!Array.isArray(parsedClasses)) {
+                        parsedClasses = [parsedClasses];
+                    }
+                } catch(e) {
+                    parsedClasses = [classes];
+                }
+            }
         }
 
         const newMaterial = {
@@ -626,6 +635,7 @@ app.post('/api/materials', authenticateAdmin, upload.single('file'), async (req,
         const docRef = await db.collection('materials').add(newMaterial);
         res.status(201).json({ id: docRef.id, ...newMaterial });
     } catch (error) {
+        console.error("Error in /api/materials POST:", error);
         res.status(500).json({ error: error.message });
     }
 });

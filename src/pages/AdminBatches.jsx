@@ -360,34 +360,36 @@ const AdminBatches = () => {
   // Add study materials link from within active workspace
   const handleUploadWorkspaceNote = async (e) => {
     e.preventDefault();
-    if (!newNoteForm.title || !newNoteForm.subject || !newNoteForm.driveLink) {
+    const subject = selectedWorkspaceSubject || newNoteForm.subject;
+    if (!newNoteForm.title || !subject || !newNoteForm.driveLink) {
       alert('Please fill all notes fields and provide a Google Drive link.');
       return;
     }
 
     setUploadingNote(true);
-    const formData = new FormData();
-    formData.append('title', newNoteForm.title);
-    formData.append('subject', newNoteForm.subject);
-    formData.append('classes', JSON.stringify([activeWorkspaceBatch.name])); // tag to batch name
-    formData.append('batchId', activeWorkspaceBatch.id);
-    formData.append('fileUrl', newNoteForm.driveLink);
 
     try {
       const res = await apiFetch('/materials', {
         method: 'POST',
-        body: formData,
-        headers: {} // let fetch manage content boundary
+        body: JSON.stringify({
+          title: newNoteForm.title.trim(),
+          subject: subject,
+          classes: [activeWorkspaceBatch.name], // tag to batch name
+          batchId: activeWorkspaceBatch.id,
+          fileUrl: newNoteForm.driveLink.trim()
+        })
       });
       if (res.ok) {
         showToast('📄 Google Drive link added to batch!');
-        setNewNoteForm({ title: '', subject: '', driveLink: '' });
+        setNewNoteForm({ title: '', subject: subject, driveLink: '' });
         fetchWorkspaceNotes();
       } else {
-        alert('Failed to add Google Drive link.');
+        const errorData = await res.json().catch(() => ({}));
+        alert(`Failed to add Google Drive link. ${errorData.message || errorData.error || ''}`);
       }
     } catch (e) {
       console.error(e);
+      alert('Failed to add Google Drive link. Server could not be reached.');
     } finally {
       setUploadingNote(false);
     }
