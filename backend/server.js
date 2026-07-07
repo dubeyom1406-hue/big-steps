@@ -15,15 +15,18 @@ const emailPass = process.env.EMAIL_PASS ? process.env.EMAIL_PASS.replace(/\s+/g
 // Configure nodemailer transporter using environment variables
 const transporter = nodemailer.createTransport({
     host: 'smtp.gmail.com',
-    port: 465,
-    secure: true, // Use SSL
+    port: 587,
+    secure: false, // Use STARTTLS (port 587) instead of SSL (port 465) — Render blocks 465
     auth: {
         user: emailUser,
         pass: emailPass
     },
-    connectionTimeout: 5000,
-    greetingTimeout: 5000,
-    socketTimeout: 5000
+    tls: {
+        rejectUnauthorized: false
+    },
+    connectionTimeout: 10000,
+    greetingTimeout: 10000,
+    socketTimeout: 15000
 });
 
 // Verify SMTP transporter connection at startup
