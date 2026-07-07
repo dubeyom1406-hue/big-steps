@@ -47,6 +47,49 @@ if (emailUser && emailPass && emailUser !== 'your-email@gmail.com') {
 
 // Helper function to send OTP email
 async function sendOTPEmail(toEmail, otp) {
+    const subject = 'Bright Steps Login Verification OTP';
+    const html = `
+        <div style="font-family: 'Outfit', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; padding: 20px; max-width: 600px; margin: auto; border: 1px solid #e2e8f0; border-radius: 12px; background-color: #ffffff; box-shadow: 0 4px 10px rgba(0,0,0,0.03);">
+            <div style="text-align: center; border-bottom: 2px solid #5b4fcf; padding-bottom: 15px; margin-bottom: 20px;">
+                <h2 style="color: #111827; margin: 0; font-size: 22px; font-weight: 800;">Bright Steps Coaching Centre</h2>
+            </div>
+            <div style="padding: 10px 0;">
+                <p style="color: #374151; font-size: 16px; line-height: 1.6;">Hello,</p>
+                <p style="color: #374151; font-size: 16px; line-height: 1.6;">You requested a login code to access the Student Portal. Please use the One-Time Password (OTP) below to verify your session:</p>
+                <div style="text-align: center; margin: 30px 0;">
+                    <span style="font-size: 32px; font-weight: 800; letter-spacing: 6px; color: #5b4fcf; background-color: #ede9ff; padding: 12px 30px; border-radius: 8px; border: 1.5px dashed #5b4fcf; display: inline-block;">${otp}</span>
+                </div>
+                <p style="color: #ef4444; font-size: 14px; font-weight: 600; margin-top: 25px;">Note: This OTP is confidential and will expire in 5 minutes.</p>
+            </div>
+            <div style="border-top: 1px solid #e2e8f0; padding-top: 15px; margin-top: 30px; text-align: center; font-size: 12px; color: #6b7280;">
+                <p style="margin: 0;">Need assistance? Contact support at support@brightsteps.com</p>
+                <p style="margin: 5px 0 0 0;">© 2026 Bright Steps Coaching Centre. All rights reserved.</p>
+            </div>
+        </div>
+    `;
+
+    // 1. Try Google Apps Script Webhook first (if configured)
+    if (process.env.EMAIL_SCRIPT_URL) {
+        try {
+            console.log(`📤 Attempting to send OTP via Google Apps Script Webhook...`);
+            const response = await fetch(process.env.EMAIL_SCRIPT_URL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ to: toEmail, subject, html })
+            });
+            const result = await response.json();
+            if (result && (result.success || result.status === 'success')) {
+                console.log(`✅ OTP email sent successfully via Google Apps Script to ${toEmail}`);
+                return true;
+            } else {
+                console.error("❌ Google Apps Script returned unsuccessful result:", result);
+            }
+        } catch (scriptErr) {
+            console.error("❌ Failed to send OTP via Google Apps Script Webhook:", scriptErr.message);
+        }
+    }
+
+    // 2. Fallback to standard SMTP
     if (!emailUser || emailUser === 'your-email@gmail.com' || !emailPass) {
         console.log(`⚠️ Email sending skipped (EMAIL_USER/EMAIL_PASS is not configured in backend/.env)`);
         return null;
@@ -54,26 +97,8 @@ async function sendOTPEmail(toEmail, otp) {
     const mailOptions = {
         from: `"Bright Steps Coaching" <${emailUser}>`,
         to: toEmail,
-        subject: 'Bright Steps Login Verification OTP',
-        html: `
-            <div style="font-family: 'Outfit', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; padding: 20px; max-width: 600px; margin: auto; border: 1px solid #e2e8f0; border-radius: 12px; background-color: #ffffff; box-shadow: 0 4px 10px rgba(0,0,0,0.03);">
-                <div style="text-align: center; border-bottom: 2px solid #5b4fcf; padding-bottom: 15px; margin-bottom: 20px;">
-                    <h2 style="color: #111827; margin: 0; font-size: 22px; font-weight: 800;">Bright Steps Coaching Centre</h2>
-                </div>
-                <div style="padding: 10px 0;">
-                    <p style="color: #374151; font-size: 16px; line-height: 1.6;">Hello,</p>
-                    <p style="color: #374151; font-size: 16px; line-height: 1.6;">You requested a login code to access the Student Portal. Please use the One-Time Password (OTP) below to verify your session:</p>
-                    <div style="text-align: center; margin: 30px 0;">
-                        <span style="font-size: 32px; font-weight: 800; letter-spacing: 6px; color: #5b4fcf; background-color: #ede9ff; padding: 12px 30px; border-radius: 8px; border: 1.5px dashed #5b4fcf; display: inline-block;">${otp}</span>
-                    </div>
-                    <p style="color: #ef4444; font-size: 14px; font-weight: 600; margin-top: 25px;">Note: This OTP is confidential and will expire in 5 minutes.</p>
-                </div>
-                <div style="border-top: 1px solid #e2e8f0; padding-top: 15px; margin-top: 30px; text-align: center; font-size: 12px; color: #6b7280;">
-                    <p style="margin: 0;">Need assistance? Contact support at support@brightsteps.com</p>
-                    <p style="margin: 5px 0 0 0;">© 2026 Bright Steps Coaching Centre. All rights reserved.</p>
-                </div>
-            </div>
-        `
+        subject: subject,
+        html: html
     };
     return transporter.sendMail(mailOptions);
 }
@@ -253,9 +278,9 @@ app.post('/api/auth/send-otp', async (req, res) => {
         console.log(`   Expires: 5 minutes`);
         console.log(`========================================\n`);
 
-        const hasSMTPConfig = emailUser && emailUser !== 'your-email@gmail.com' && emailPass;
+        const hasEmailConfig = (emailUser && emailUser !== 'your-email@gmail.com' && emailPass) || process.env.EMAIL_SCRIPT_URL;
 
-        if (hasSMTPConfig) {
+        if (hasEmailConfig) {
             sendOTPEmail(trimmedEmail, otp)
                 .then(mailResult => {
                     if (mailResult) {
@@ -263,7 +288,7 @@ app.post('/api/auth/send-otp', async (req, res) => {
                     }
                 })
                 .catch(err => {
-                    console.error("❌ Failed to send mock OTP email via SMTP:", err);
+                    console.error("❌ Failed to send mock OTP email:", err);
                 });
 
             return res.status(200).json({ success: true, message: `OTP sent successfully! Please check your email inbox.` });
@@ -294,9 +319,9 @@ app.post('/api/auth/send-otp', async (req, res) => {
         console.log(`   Expires: 5 minutes`);
         console.log(`========================================\n`);
 
-        const hasSMTPConfig = emailUser && emailUser !== 'your-email@gmail.com' && emailPass;
+        const hasEmailConfig = (emailUser && emailUser !== 'your-email@gmail.com' && emailPass) || process.env.EMAIL_SCRIPT_URL;
 
-        if (hasSMTPConfig) {
+        if (hasEmailConfig) {
             sendOTPEmail(trimmedEmail, otp)
                 .then(mailResult => {
                     if (mailResult) {
@@ -304,7 +329,7 @@ app.post('/api/auth/send-otp', async (req, res) => {
                     }
                 })
                 .catch(err => {
-                    console.error("❌ Failed to send OTP email via SMTP:", err);
+                    console.error("❌ Failed to send OTP email:", err);
                 });
 
             return res.status(200).json({ success: true, message: "OTP sent successfully! Please check your email inbox." });
