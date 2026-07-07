@@ -406,13 +406,7 @@ const Home = () => {
                   <h3>🕐 Class Timings</h3>
                   <div className="lp-timing-list">
                     <div className="lp-timing-item">
-                      <span>Morning Batch</span><span>7:00 AM – 9:00 AM</span>
-                    </div>
-                    <div className="lp-timing-item">
-                      <span>Afternoon Batch</span><span>2:00 PM – 4:00 PM</span>
-                    </div>
-                    <div className="lp-timing-item">
-                      <span>Evening Batch</span><span>5:00 PM – 7:00 PM</span>
+                      <span>Evening Batch</span><span>4:00 PM – 6:00 PM</span>
                     </div>
                   </div>
                 </div>
