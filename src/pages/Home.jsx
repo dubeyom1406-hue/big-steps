@@ -120,7 +120,7 @@ const Home = () => {
 
   const handleEnquirySubmit = (e) => {
     e.preventDefault();
-    const to = "brightstepsfoundationclasses@gmail.com";
+    const to = "brighstepsfoundationclasses@gmail.com";
     const subject = `Admission Enquiry for ${enquiry.studentName}`;
     const body = `Hello Bright Steps Team,
 

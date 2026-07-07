@@ -62,7 +62,7 @@ async function sendOTPEmail(toEmail, otp) {
                 <p style="color: #ef4444; font-size: 14px; font-weight: 600; margin-top: 25px;">Note: This OTP is confidential and will expire in 5 minutes.</p>
             </div>
             <div style="border-top: 1px solid #e2e8f0; padding-top: 15px; margin-top: 30px; text-align: center; font-size: 12px; color: #6b7280;">
-                <p style="margin: 0;">Need assistance? Contact support at brightstepsfoundationclasses@gmail.com</p>
+                <p style="margin: 0;">Need assistance? Contact support at brighstepsfoundationclasses@gmail.com</p>
                 <p style="margin: 5px 0 0 0;">© 2026 Bright Steps Coaching Centre. All rights reserved.</p>
             </div>
         </div>
