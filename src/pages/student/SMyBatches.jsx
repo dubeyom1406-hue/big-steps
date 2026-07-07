@@ -525,19 +525,21 @@ const SMyBatches = ({ studentData, setActiveSection }) => {
                     {filteredWorkspaceNotes.map((note) => (
                       <div key={note.id} className="sd-class-item" style={{ background: '#ffffff', border: '1px solid #e2e8f0', boxShadow: 'none' }}>
                         <div className="sd-class-indicator-col" style={{ minWidth: '40px' }}>
-                          <span style={{ fontSize: '24px' }}>📄</span>
+                          <span style={{ fontSize: '24px' }}>
+                            {note.originalName?.toLowerCase().includes('drive') || note.fileUrl?.startsWith('http') ? '🔗' : '📄'}
+                          </span>
                         </div>
                         <div className="sd-class-details-col">
                           <strong>{note.title}</strong>
                           <span style={{ fontSize: '12px', color: '#64748b' }}>Format: <strong>{note.originalName?.split('.').pop().toUpperCase() || 'PDF'}</strong> &bull; Subject: <strong>{note.subject}</strong></span>
                         </div>
                         <a
-                          href={`${BASE_URL.endsWith('/api') ? BASE_URL.slice(0, -4) : BASE_URL}${note.fileUrl}`}
+                          href={note.fileUrl?.startsWith('http') ? note.fileUrl : `${BASE_URL.endsWith('/api') ? BASE_URL.slice(0, -4) : BASE_URL}${note.fileUrl}`}
                           target="_blank"
                           rel="noopener noreferrer"
                           style={{ textDecoration: 'none', background: '#3b82f6', color: '#fff', padding: '8px 16px', borderRadius: '8px', fontSize: '12px', fontWeight: '700', cursor: 'pointer', fontFamily: 'inherit', textAlign: 'center' }}
                         >
-                          Download
+                          {note.fileUrl?.startsWith('http') ? 'Open Link' : 'Download'}
                         </a>
                       </div>
                     ))}

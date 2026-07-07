@@ -34,7 +34,7 @@ const AdminBatches = () => {
   const [workspaceNotes, setWorkspaceNotes] = useState([]);
   const [notesLoading, setNotesLoading]     = useState(false);
   const [subjects, setSubjects]             = useState([]);
-  const [newNoteForm, setNewNoteForm] = useState({ title: '', subject: '', file: null });
+  const [newNoteForm, setNewNoteForm] = useState({ title: '', subject: '', driveLink: '' });
   const [uploadingNote, setUploadingNote]   = useState(false);
 
   // Workspace Enrolled Students state
@@ -357,11 +357,11 @@ const AdminBatches = () => {
     }
   };
 
-  // Upload study materials from within active workspace
+  // Add study materials link from within active workspace
   const handleUploadWorkspaceNote = async (e) => {
     e.preventDefault();
-    if (!newNoteForm.title || !newNoteForm.subject || !newNoteForm.file) {
-      alert('Please fill all notes fields and pick a document file.');
+    if (!newNoteForm.title || !newNoteForm.subject || !newNoteForm.driveLink) {
+      alert('Please fill all notes fields and provide a Google Drive link.');
       return;
     }
 
@@ -371,7 +371,7 @@ const AdminBatches = () => {
     formData.append('subject', newNoteForm.subject);
     formData.append('classes', JSON.stringify([activeWorkspaceBatch.name])); // tag to batch name
     formData.append('batchId', activeWorkspaceBatch.id);
-    formData.append('file', newNoteForm.file);
+    formData.append('fileUrl', newNoteForm.driveLink);
 
     try {
       const res = await apiFetch('/materials', {
@@ -380,12 +380,11 @@ const AdminBatches = () => {
         headers: {} // let fetch manage content boundary
       });
       if (res.ok) {
-        showToast('📄 PDF worksheet uploaded to batch!');
-        setNewNoteForm({ title: '', subject: '', file: null });
-        document.getElementById('workspace-file-upload').value = '';
+        showToast('📄 Google Drive link added to batch!');
+        setNewNoteForm({ title: '', subject: '', driveLink: '' });
         fetchWorkspaceNotes();
       } else {
-        alert('Worksheet upload failed.');
+        alert('Failed to add Google Drive link.');
       }
     } catch (e) {
       console.error(e);
@@ -856,11 +855,11 @@ const AdminBatches = () => {
 
           {workspaceTab === 'notes' && (
             <div>
-              <h2 style={{ fontSize: '16px', fontWeight: '800', color: '#1f2937', marginBottom: '16px' }}>Upload & Manage PDF Reference Materials</h2>
+              <h2 style={{ fontSize: '16px', fontWeight: '800', color: '#1f2937', marginBottom: '16px' }}>Manage Reference Materials & Links</h2>
 
               {/* Upload form block */}
               <form onSubmit={handleUploadWorkspaceNote} style={{ background: '#f9fafb', padding: '20px', borderRadius: '12px', border: '1px solid #e5e7eb', marginBottom: '24px', display: 'flex', flexDirection: 'column', gap: '14px' }}>
-                <h4 style={{ margin: 0, fontSize: '14px', fontWeight: '700' }}>Upload New PDF Worksheet / Notes</h4>
+                <h4 style={{ margin: 0, fontSize: '14px', fontWeight: '700' }}>Add Google Drive Link for Worksheet / Notes</h4>
                 <div className="ab-note-grid" style={{ gap: '12px', alignItems: 'flex-end' }}>
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
                     <label style={{ fontSize: '12px', fontWeight: '600' }}>Title</label>
@@ -870,12 +869,12 @@ const AdminBatches = () => {
                     <label style={{ fontSize: '12px', fontWeight: '600' }}>Subject</label>
                     <input type="text" value={selectedWorkspaceSubject} readOnly style={{ padding: '8px 12px', border: '1px solid #d1d5db', borderRadius: '6px', fontSize: '13px', background: '#f3f4f6', cursor: 'not-allowed', color: '#6b7280' }} />
                   </div>
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-                    <label style={{ fontSize: '12px', fontWeight: '600' }}>Pick Document</label>
-                    <input id="workspace-file-upload" type="file" onChange={e => setNewNoteForm({...newNoteForm, file: e.target.files[0]})} style={{ fontSize: '12px' }} required />
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', flex: 1 }}>
+                    <label style={{ fontSize: '12px', fontWeight: '600' }}>Google Drive Link</label>
+                    <input type="url" placeholder="https://drive.google.com/..." value={newNoteForm.driveLink} onChange={e => setNewNoteForm({...newNoteForm, driveLink: e.target.value})} style={{ padding: '8px 12px', border: '1px solid #d1d5db', borderRadius: '6px', fontSize: '13px', width: '100%', boxSizing: 'border-box' }} required />
                   </div>
                   <button type="submit" disabled={uploadingNote} style={{ background: '#5b4fcf', color: '#fff', border: 'none', padding: '10px 20px', borderRadius: '6px', fontWeight: '600', cursor: 'pointer' }}>
-                    {uploadingNote ? 'Uploading...' : 'Upload'}
+                    {uploadingNote ? 'Adding...' : 'Add Link'}
                   </button>
                 </div>
               </form>

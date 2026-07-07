@@ -586,12 +586,18 @@ app.delete('/api/subjects/:id', authenticateAdmin, async (req, res) => {
 // 10. Upload a new material (PDF/Image)
 app.post('/api/materials', authenticateAdmin, upload.single('file'), async (req, res) => {
     try {
-        if (!req.file) {
-            return res.status(400).json({ message: "No file uploaded" });
+        const { title, subject, classes, batchId, fileUrl } = req.body;
+        
+        let finalFileUrl = fileUrl || '';
+        let originalName = 'Drive Link';
+
+        if (req.file) {
+            finalFileUrl = `/uploads/${req.file.filename}`;
+            originalName = req.file.originalname;
+        } else if (!finalFileUrl) {
+            return res.status(400).json({ message: "No file uploaded or link provided" });
         }
 
-        const { title, subject, classes, batchId } = req.body;
-        
         // classes comes as a stringified JSON array from FormData
         let parsedClasses = [];
         try {
@@ -605,8 +611,8 @@ app.post('/api/materials', authenticateAdmin, upload.single('file'), async (req,
             subject,
             classes: parsedClasses,
             batchId: batchId || null,
-            fileUrl: `/uploads/${req.file.filename}`,
-            originalName: req.file.originalname,
+            fileUrl: finalFileUrl,
+            originalName: originalName,
             createdAt: new Date().toISOString()
         };
 

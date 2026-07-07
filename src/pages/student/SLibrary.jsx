@@ -35,6 +35,7 @@ const SLibrary = ({ studentData }) => {
   });
 
   const getFileIcon = (name = '') => {
+    if (name.toLowerCase().includes('drive') || name.startsWith('http')) return '🔗';
     const ext = name.split('.').pop().toLowerCase();
     if (ext === 'pdf') return '📄';
     if (['jpg','jpeg','png','gif','webp'].includes(ext)) return '🖼️';
@@ -43,6 +44,7 @@ const SLibrary = ({ studentData }) => {
   };
 
   const getFileLabel = (name = '') => {
+    if (name.toLowerCase().includes('drive') || name.startsWith('http')) return 'LINK';
     const ext = name.split('.').pop().toUpperCase();
     return ext || 'FILE';
   };
@@ -137,7 +139,7 @@ const SLibrary = ({ studentData }) => {
                     </td>
                     <td>
                       <a
-                        href={`${BASE_URL.endsWith('/api') ? BASE_URL.slice(0, -4) : BASE_URL}${m.fileUrl}`}
+                        href={m.fileUrl?.startsWith('http') ? m.fileUrl : `${BASE_URL.endsWith('/api') ? BASE_URL.slice(0, -4) : BASE_URL}${m.fileUrl}`}
                         target="_blank"
                         rel="noopener noreferrer"
                         style={{
@@ -154,7 +156,7 @@ const SLibrary = ({ studentData }) => {
                           cursor: 'pointer'
                         }}
                       >
-                        Download PDF
+                        {m.fileUrl?.startsWith('http') ? 'Open Link' : 'Download PDF'}
                       </a>
                     </td>
                   </tr>
